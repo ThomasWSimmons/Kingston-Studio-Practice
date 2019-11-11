@@ -6,8 +6,8 @@ using Vuforia;
 
 public class EvenHandler : MonoBehaviour, ITrackableEventHandler
 {
-    private GameObject thePanel;
-    private List<GameObject> allTheInfos = new List<GameObject>();
+    //private int firstRound=0;
+
 
     public UnityAction OntrackingFound;
     public UnityAction OntrackingLost;
@@ -30,16 +30,7 @@ public class EvenHandler : MonoBehaviour, ITrackableEventHandler
     };
     private void Awake()
     {
-        thePanel = GameObject.Find("Canvas/Panel");
-        Debug.Log(thePanel.name);
-        foreach(RectTransform t in thePanel.transform)
-        {
-            print(t.name);
-            t.gameObject.SetActive(false);
-            allTheInfos.Add(t.gameObject);//has the text to display    
-        }
-        Debug.Log("transform:" + transform.name);
-
+      
         mtrackableBehaviour = GetComponent<TrackableBehaviour>();
         mtrackableBehaviour.RegisterTrackableEventHandler(this);
        // Debug.Log("I'm a " + transform.name);
@@ -61,13 +52,17 @@ public class EvenHandler : MonoBehaviour, ITrackableEventHandler
                     OntrackingFound();
 
                 }
-                if (!thePanel.activeSelf)
+               /* if (!EventManager.panelActive)
                 {
-                    DisplayInfo();
-                    thePanel.SetActive(true);
-
+                    print("activating");
+                    EventManager.Activate(transform.name);
                 }
+                else
+                {
+                    print("DOING NOTHING");
+                }*/
                 print("tracking found");
+                EventManager.Activate(transform.name);
                 return;
             }
         }
@@ -80,42 +75,24 @@ public class EvenHandler : MonoBehaviour, ITrackableEventHandler
                     OntrackingLost();
 
                 }
-                if (thePanel.activeSelf)
-                {
-                    hideInfo();
-                    thePanel.SetActive(false);
-
-                }
                 print("tracking lost");
+                EventManager.DeActivate(transform.name);
+                /*
+                if (firstRound > 0)
+                {
+                    EventManager.DeActivate(transform.name);
+                }
+                else
+                {
+                    print("not yet");
+                    firstRound++;
+                }*/
                 return;
             }
         }
      
     }
-    public void DisplayInfo()
-    {
-        if (transform.name == "sugar")
-        {
-            allTheInfos.Find((GameObject obj) => obj.name == "sugarInfo").SetActive(true);
-        }
-        else if(transform.name == "coffee")
-        {
-            allTheInfos.Find((GameObject obj) => obj.name == "coffeeInfo").SetActive(true);
-        }
   
-    }
-    public void hideInfo()
-    {
-
-        if (transform.name == "sugar")
-        {
-            allTheInfos.Find((GameObject obj) => obj.name == "sugarInfo").SetActive(false);
-        }
-        else if (transform.name == "coffee")
-        {
-            allTheInfos.Find((GameObject obj) => obj.name == "coffeeInfo").SetActive(false);
-        }
-    }
  
     
 
