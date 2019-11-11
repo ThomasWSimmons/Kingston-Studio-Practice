@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="QCAR_Dataset_config.xsd">
+  <TargetSet version="5.0" toolVersion="4.2.0">
+    <ObjectTarget bbox="0.0000 0.0000 0.0000 0.1425 0.0950 0.0950" captureAppVersion="6.5.0" lastSaved="2019-11-11T11:22:19Z" name="cards" targetId="447167f9ae6a444a81ba62fc50488018" version="2.0" />
+    <ObjectTarget bbox="0.0000 0.0000 0.0000 0.1425 0.0950 0.0950" captureAppVersion="6.5.0" lastSaved="2019-11-11T10:22:23Z" name="mouse" targetId="379b203da6ee48cea781ce5a90cb8c04" version="2.0" />
+    <ObjectTarget bbox="0.0000 0.0000 0.0000 0.1425 0.0950 0.0950" captureAppVersion="6.5.0" lastSaved="2019-11-11T10:08:48Z" name="lipstickTest" targetId="ba0393b28d40483988ed95f8c07a03ee" version="2.0" />
+  </TargetSet>
+</QCARInfo>
