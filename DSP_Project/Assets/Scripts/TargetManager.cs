@@ -62,6 +62,7 @@ public class TargetManager : MonoBehaviour
             //rename
             target.gameObject.name = target.TrackableName;
             //add functionnality
+            target.gameObject.AddComponent<EvenHandler>();
             //done
 
             Debug.Log(target.TrackableName + " " + "created");
