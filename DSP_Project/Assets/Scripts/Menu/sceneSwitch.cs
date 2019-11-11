@@ -22,11 +22,8 @@ public class sceneSwitch : MonoBehaviour
     {
     
     }
-    public void resetChar()
-    {
-        Debug.Log("reset");
-        handleDropDown.reset = true;
-    }
+
+   
 
 }
 
