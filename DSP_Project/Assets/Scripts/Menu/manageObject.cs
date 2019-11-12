@@ -5,7 +5,7 @@ using UnityEngine;
 public class manageObject : MonoBehaviour
 {
     
-    float rotationSpeed = 1000;
+    float rotationSpeed = 200;
     // Start is called before the first frame update
     void OnMouseDrag()
     {
