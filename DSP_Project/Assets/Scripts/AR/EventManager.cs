@@ -5,6 +5,7 @@ using UnityEngine;
 public class EventManager : MonoBehaviour
 {
     public GameObject myPanel;
+    public GameObject checkMark;
     private static bool Active;
     private static string theName;
     private List<GameObject> allTheText = new List<GameObject>();
@@ -25,6 +26,7 @@ public class EventManager : MonoBehaviour
     {
         if (!myPanel.activeSelf && Active)
         {
+            checkMark.SetActive(true);
             myPanel.SetActive(true);
             switch (theName)
             {
@@ -39,6 +41,7 @@ public class EventManager : MonoBehaviour
         }
         else if( myPanel.activeSelf && !Active)
         {
+            checkMark.SetActive(false);
             myPanel.SetActive(false);
             switch (theName)
             {
