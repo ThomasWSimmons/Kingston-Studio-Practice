@@ -8,6 +8,7 @@ public class API : MonoBehaviour
 {
     public Button theButton;
     public Text responseText;
+    private string[] sugarAmount;
     private const string endpoint = "https://world.openfoodfacts.org/api/v0/product/";
     //private const string endpoint = "https://www.foodrepo.org/api/v3/products?excludes=images%2Cid%2Ccountry%2Cdisplay_name_translations%2Cingredients_translations%2Corigin_translations%2Cstatus%2Cquantity%2Cunit%2Cportion_quantity%2Cportion_unit%2Calcohol_by_volume%2Ccreated_at%2Cupdated_at&barcodes=";
     public static string barcode;
@@ -40,6 +41,7 @@ public class API : MonoBehaviour
         if (theURL != null)
         {
             StartCoroutine(GetRequest(theURL));
+           
         }
     }
     IEnumerator GetRequest(string uri)
@@ -69,10 +71,11 @@ public class API : MonoBehaviour
                 {
                     if (s.Contains("sugars") && s.Contains("100"))
                     {
-                        string[] amount = s.Split(':');
-
+                         sugarAmount = s.Split(':');
+                         responseText.text = (string)sugarAmount.GetValue(1);
                     }
                 }
+                
             }
         }
     }

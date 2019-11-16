@@ -32,6 +32,8 @@ public class ReadBarcodeFromFile : MonoBehaviour
         if (result != null)
         {
             //Debug.Log(result.BarcodeFormat.ToString());
+            singleRead = true;
+            inputTexture = null;
             Debug.Log(result.Text);
             API.scanned = true;
             API.barcode = result.Text;
