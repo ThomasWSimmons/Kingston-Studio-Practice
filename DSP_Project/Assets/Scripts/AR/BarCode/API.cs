@@ -16,10 +16,13 @@ public class API : MonoBehaviour
     public static string barcode;
     private string theURL;
     public static bool scanned;
-    private int timer;
-    void Start()
+
+    //to allow disabling
+    public static bool doneAPI;
+   
+    void OnEnable()
     {
-        timer = 0;
+        doneAPI = false;
         scanned = false;
 
     }
@@ -53,10 +56,14 @@ public class API : MonoBehaviour
             {
                 Debug.Log(pages[page] + ": Error: " + webRequest.error);
                 cross.SetActive(true);
-                yield return new WaitForSeconds(1f);
+                float timer = 0;
+                while (timer < 1f)
+                {
+                    timer += Time.deltaTime;
+                }
                 cross.SetActive(false);
                 error.SetActive(true);
-
+                doneAPI = true;
             }
             else
             {
@@ -73,6 +80,7 @@ public class API : MonoBehaviour
                 yield return new WaitForSeconds(1);
                 check.SetActive(false);
                 result.SetActive(true);
+                doneAPI = true;
             }
 
         }

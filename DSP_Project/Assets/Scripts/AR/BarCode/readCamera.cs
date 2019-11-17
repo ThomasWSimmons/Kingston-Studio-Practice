@@ -5,22 +5,22 @@ public class readCamera : MonoBehaviour
 {
     private Camera _camera;
     private Texture2D _screenShot;
-    void Start()
+    //to allow disabling
+    public static bool doneCamera;
+    private void OnEnable()
     {
+        doneCamera = false;
         _camera = GameObject.Find("/ARCamera").GetComponent<Camera>();
         if(_camera!= null)
         {
             Debug.Log("found");
+            Debug.Log("theScreenShot:"+_screenShot);
         }
     }
     public void Screenshot()
     {
-
         StartCoroutine(TakeScreenShot());
     }
-    
-
-
     public IEnumerator TakeScreenShot()
     {
         yield return new WaitForEndOfFrame();
@@ -36,17 +36,10 @@ public class readCamera : MonoBehaviour
         RenderTexture.active = null;
         Destroy(rt);
         ReadBarcodeFromFile.inputTexture = _screenShot;
-    
+
         Debug.Log("screenshotTaken" + _screenShot);
-        //string filename = SceenShotName(resWidth, resHeight);
-
-        //byte[] bytes = _screenShot.EncodeToPNG();
-        //System.IO.File.WriteAllBytes(filename, bytes);
-
-        //Debug.Log(string.Format("Took screenshot to: {0}", filename));
-
-        //Sprite tempSprite = Sprite.Create(_screenShot, new Rect(0, 0, Screen.width, Screen.height), new Vector2(0, 0));
-        
+        doneCamera = true;
+       
     }
 
 }
