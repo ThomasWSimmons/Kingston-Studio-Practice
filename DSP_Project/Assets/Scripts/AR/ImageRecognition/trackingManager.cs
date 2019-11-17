@@ -10,9 +10,9 @@ public class trackingManager : MonoBehaviour
     public static bool trackingFound;
     public static bool trackingAllowed;
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        trackingAllowed = true;
+        
         trackingFound = false;
         timer = 0;
     }
@@ -20,15 +20,15 @@ public class trackingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (trackingAllowed)
-        {
+        
             if (!trackingFound)
             {
                 if (timer > 8)
                 {
                     Debug.Log("too long");
-                    toActivate.SetActive(false);
-                    toDeactivate.SetActive(true);
+                    toActivate.SetActive(true);
+                    toDeactivate.SetActive(false);
+                    gameObject.SetActive(false);
                 }
                 else
                 {
@@ -37,14 +37,11 @@ public class trackingManager : MonoBehaviour
             }
             else
             {
-                trackingFound = false;
+
                 timer = 0;
-            }
+                gameObject.SetActive(false);
+
         }
-  
     }
-    public void setAllowance()
-    {
-        trackingAllowed = true;
-    }
+
 }

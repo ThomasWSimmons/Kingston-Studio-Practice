@@ -66,6 +66,7 @@ public class TargetManager : MonoBehaviour
             //done
 
             Debug.Log(target.TrackableName + " " + "created");
+            //ajouter target name a database script
         }
     }
 }

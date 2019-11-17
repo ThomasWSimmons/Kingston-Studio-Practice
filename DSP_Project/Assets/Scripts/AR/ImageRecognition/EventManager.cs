@@ -1,29 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
     public GameObject Results;
-    public GameObject resultInfo;
     public GameObject checkMark;
     public GameObject loading;
     private float timer;
     public GameObject scanningPage;
     private static bool Active;
     private static string theName;
-    private List<GameObject> allTheText = new List<GameObject>();
+
+
+    //result section
+    public Text theProductName,serving,calories,carbs,sugars,answer,description,injectionAmount,unitRatio;
+    
+    public Image theImage;
+   
     // Start is called before the first frame update
     void Start()
     {
-        foreach (Transform t in resultInfo.transform)//access result panel to get the
-        {
-            t.gameObject.SetActive(false);//deactivate panels
-            allTheText.Add(t.gameObject);//has the text to display    
-        }
-
         Results.SetActive(false);
         timer = 0; //loads the results of scan
+        
     }
 
     // Update is called once per frame
@@ -31,24 +32,15 @@ public class EventManager : MonoBehaviour
     {
         if (!Results.activeSelf && Active)
         {
-            trackingManager.trackingAllowed = false;
+            trackingManager.trackingFound = true;
             if (timer > 2f)
             {
                 timer = 0;//user will put his phone away from target so tracking active false;
                 checkMark.SetActive(false);
-                Results.SetActive(true);
                 Active = false;
-                switch (theName)
-                {
-                    case "sugar":
-                        allTheText.Find((GameObject obj) => obj.name == "sugarInfo").SetActive(true);
-                        //assign nutriments values here
+                whichResult(theName);
+                Results.SetActive(true);
 
-                        break;
-                    case "coffee":
-                        allTheText.Find((GameObject obj) => obj.name == "coffeeInfo").SetActive(true);
-                        break;
-                }
             }
             else
             {
@@ -67,6 +59,7 @@ public class EventManager : MonoBehaviour
     
             }
         }
+    
        /* else if (myPanel.activeSelf && !Active)
         {
             scanningPage.SetActive(true);
@@ -95,4 +88,33 @@ public class EventManager : MonoBehaviour
         Active = false;
         theName = name;
     }*/ //tracking lost
+    public void whichResult(string name)
+    {
+        switch (name)
+        {
+            case "sugar":
+                theProductName.text = "sugar";
+                serving.text = "50g";
+                calories.text = "100 kCal";
+                carbs.text = "6.4g";
+                sugars.text = "6.4g";
+                answer.text = "don't eat too much sugar!";
+                description.text = "I don't think it's a good idea";
+                injectionAmount.text = "5";
+                unitRatio.text = "Your unit ratio is";
+                //assign nutriments values here
+                break;
+            case "coffee":
+                theProductName.text = "Coffee";
+                serving.text = "20g";
+                calories.text = "30 kCal";
+                carbs.text = "0g";
+                sugars.text = "0g";
+                answer.text = "don't drink too much coffee!";
+                description.text = "Wake up!";
+                injectionAmount.text = "2";
+                unitRatio.text = "Your unit ratio is";
+                break;
+        }
+    }
 }

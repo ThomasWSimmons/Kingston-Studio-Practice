@@ -10,7 +10,6 @@ public class API : MonoBehaviour
     public GameObject check;
     public GameObject cross;
     public GameObject error;
-    public Text responseText;
     private string[] sugarAmount;
     private const string endpoint = "https://world.openfoodfacts.org/api/v0/product/";
     public static string barcode;
@@ -19,7 +18,12 @@ public class API : MonoBehaviour
 
     //to allow disabling
     public static bool doneAPI;
-   
+
+    //result section
+    public Text theProductName, serving, calories, carbs, sugars, answer, description, injectionAmount, unitRatio;
+
+    public Image theImage;
+
     void OnEnable()
     {
         doneAPI = false;
@@ -68,15 +72,10 @@ public class API : MonoBehaviour
             else
             {
                 check.SetActive(true);
+                //INPUT INFOS HERE
                 string[] words = webRequest.downloadHandler.text.Split(',');
-                foreach (string s in words)
-                {
-                    if (s.Contains("sugars") && s.Contains("100"))
-                    {
-                        sugarAmount = s.Split(':');
-                        responseText.text = (string)sugarAmount.GetValue(1);
-                    }
-                }
+
+               
                 yield return new WaitForSeconds(1);
                 check.SetActive(false);
                 result.SetActive(true);
@@ -85,7 +84,50 @@ public class API : MonoBehaviour
 
         }
     }
- }
+    void getProdName(string[] theAnswer)
+    {
+
+    }
+    void getProdServing(string[] theAnswer)
+    {
+
+    }
+    void getProdCarb(string[] theAnswer)
+    {
+
+    }
+    void getProdCalories(string[] theAnswer)
+    {
+
+    }
+    void getProdSugar(string[] theAnswer)
+    {
+        foreach (string s in theAnswer)
+        {
+            if (s.Contains("sugars") && s.Contains("100"))
+            {
+                sugarAmount = s.Split(':');
+                sugars.text = (string)sugarAmount.GetValue(1);
+            }
+        }
+    }
+    void getProdImpact(string[] theAnswer)
+    {
+
+    }
+    void getProdDescription(string[] theAnswer)
+    {
+
+    }
+    void getInjection(string[] theAnswer)
+    {
+
+    }
+    void getUnitRatio(string[] theAnswer)
+    {
+
+    }
+}
 
      /* BACKUP CODE
       *using System.Collections;
