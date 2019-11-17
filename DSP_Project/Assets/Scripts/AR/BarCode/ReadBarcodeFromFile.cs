@@ -6,7 +6,8 @@ public class ReadBarcodeFromFile : MonoBehaviour
 {
     public static Texture2D inputTexture; // Note: [x] Read/Write must be enabled from texture import settings
     private bool singleRead;
-
+    public GameObject loading;
+    
     private void Start()
     {
         singleRead = true;
@@ -35,6 +36,8 @@ public class ReadBarcodeFromFile : MonoBehaviour
             singleRead = true;
             inputTexture = null;
             Debug.Log(result.Text);
+            loading.SetActive(false);
+
             API.scanned = true;
             API.barcode = result.Text;
 

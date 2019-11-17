@@ -6,9 +6,10 @@ using Vuforia;
 
 public class EvenHandler : MonoBehaviour, ITrackableEventHandler
 {
-    //private int firstRound=0;
+    //ONE EVENT HANDLER PER TARGET GO TO TRACKING MANAGER
 
 
+    
     public UnityAction OntrackingFound;
     public UnityAction OntrackingLost;
 
@@ -30,7 +31,6 @@ public class EvenHandler : MonoBehaviour, ITrackableEventHandler
     };
     private void Awake()
     {
-      
         mtrackableBehaviour = GetComponent<TrackableBehaviour>();
         mtrackableBehaviour.RegisterTrackableEventHandler(this);
        // Debug.Log("I'm a " + transform.name);
@@ -47,26 +47,17 @@ public class EvenHandler : MonoBehaviour, ITrackableEventHandler
         {
             if(newStatus == trackedStatus)
             {
-                if(OntrackingFound != null)
+                if (OntrackingFound != null)
                 {
                     OntrackingFound();
-
                 }
-               /* if (!EventManager.panelActive)
-                {
-                    print("activating");
-                    EventManager.Activate(transform.name);
-                }
-                else
-                {
-                    print("DOING NOTHING");
-                }*/
                 print("tracking found");
+                trackingManager.trackingFound = true;
                 EventManager.Activate(transform.name);
                 return;
             }
         }
-        foreach (TrackableBehaviour.Status trackedStatus in mTrackingLost)
+       foreach (TrackableBehaviour.Status trackedStatus in mTrackingLost)
         {
             if (newStatus == trackedStatus)
             {
@@ -76,20 +67,11 @@ public class EvenHandler : MonoBehaviour, ITrackableEventHandler
 
                 }
                 print("tracking lost");
-                EventManager.DeActivate(transform.name);
-                /*
-                if (firstRound > 0)
-                {
-                    EventManager.DeActivate(transform.name);
-                }
-                else
-                {
-                    print("not yet");
-                    firstRound++;
-                }*/
+               // EventManager.DeActivate(transform.name);
+               
                 return;
             }
-        }
+        }//tracking,lost
      
     }
   

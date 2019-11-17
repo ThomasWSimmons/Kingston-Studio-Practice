@@ -36,7 +36,8 @@ public class readCamera : MonoBehaviour
         RenderTexture.active = null;
         Destroy(rt);
         ReadBarcodeFromFile.inputTexture = _screenShot;
-        Debug.Log("wesgh " + _screenShot);
+    
+        Debug.Log("screenshotTaken" + _screenShot);
         //string filename = SceenShotName(resWidth, resHeight);
 
         //byte[] bytes = _screenShot.EncodeToPNG();
