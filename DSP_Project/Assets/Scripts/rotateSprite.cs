@@ -5,7 +5,7 @@ using UnityEngine;
 public class rotateSprite : MonoBehaviour
 {
     private RectTransform rectComponent;
-    private float rotateSpeed = 200f;
+    public float rotateSpeed = 200f;
 
     private void Start()
     {
