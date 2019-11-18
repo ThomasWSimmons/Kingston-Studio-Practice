@@ -16,6 +16,19 @@ public class GameManager : MonoBehaviour
     //Awake is always called before any Start functions
     void Awake()
     {
+        /*
+         *
+         *
+         *
+         *
+         * A EFFACER A LA FIN
+         *
+         *
+         *
+         *
+         *
+         */
+        
         PlayerPrefs.DeleteAll();
         //Check if instance already exists
         if (instance == null)
@@ -31,7 +44,10 @@ public class GameManager : MonoBehaviour
 
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
-        if(PlayerPrefs.HasKey("firstLaunch"))
+
+        //SET UP PLAYER EXPERIENCE AMOUNT HERE
+        //SET UP PLAYER LEVEL HERE
+        if (PlayerPrefs.HasKey("firstLaunch"))
         {
             Debug.Log("to menu");
             loadMenu();
@@ -41,7 +57,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("to setup");
             loadPlayerProfile();
         }
-        InitApp();
     }
 
     //this is called only once, and the paramter tell it to be called only after the scene was loaded
@@ -64,6 +79,7 @@ public class GameManager : MonoBehaviour
     //Initializes the game for each level.
     public void InitApp()
     {
+       
     }
 
 

@@ -345,7 +345,15 @@ public class API : MonoBehaviour
     }
     void getUnitRatio(int carbsAmount)
     {
-        unitRatio.text = "Your current ratio is 1 unit to 10 grams of carbohydrates\n";
+        if (PlayerPrefs.HasKey("ratio"))
+        {
+            int playerRatio= PlayerPrefs.GetInt("ratio");
+            unitRatio.text = "Your current ratio is 1 unit to "+playerRatio+" grams of carbohydrates\n";
+        }
+        else
+        {
+            unitRatio.text = "Your current ratio is 1 unit to 10 grams of carbohydrates\n";
+        }
         float unitAmount = (float)(carbsAmount / 10.0);
         Debug.Log(unitAmount);
         int rounded = (int)Math.Round(unitAmount);
