@@ -44,7 +44,6 @@ public class ReadBarcodeFromFile : MonoBehaviour
           
             inputTexture = null;
             Debug.Log(result.Text);
-            loading.SetActive(false);
             API.scanned = true;
             API.barcode = result.Text;
             doneReader = true;
