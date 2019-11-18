@@ -164,7 +164,7 @@ IEnumerator GetRequest(string uri)
         {
             if (s.Contains("carbohydrates_serving"))
             {
-                //Debug.Log("carbs "+s);
+                Debug.Log("carbs "+s);
                 string[] temporary = s.Split(':');
                 theResultCarbs = (string)temporary.GetValue(1);
             }
