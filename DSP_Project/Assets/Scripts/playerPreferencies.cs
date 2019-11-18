@@ -4,8 +4,9 @@ using UnityEngine;
 using TMPro;
 public class playerPreferencies : MonoBehaviour
 {
-    public TextMeshProUGUI theUserName;
+    public TextMeshProUGUI theUserName,thePetName;
     public TMP_InputField theNewUserName, theNewRatio;
+   
     private string currentName;
     private int currentRatio;
     // Start is called before the first frame update
@@ -14,6 +15,8 @@ public class playerPreferencies : MonoBehaviour
         currentName= PlayerPrefs.GetString("username");
         currentRatio = PlayerPrefs.GetInt("ratio");
         theUserName.text = PlayerPrefs.GetString("username");
+        thePetName.text = PlayerPrefs.GetString("petName");
+
     }
     public void changeUserName()
     {
@@ -51,5 +54,6 @@ public class playerPreferencies : MonoBehaviour
         }
 
     }
+   
 
 }

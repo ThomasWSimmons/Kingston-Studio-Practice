@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class profileSETUP : MonoBehaviour
 {
-    public TMP_InputField theUserName;
-    public TMP_InputField theUserRatio;
+    private customPet thePet;
+    public TMP_InputField theUserName,theUserRatio,thePetName;
     private int theRatio;
-    public GameObject errorname, errorAtio;
+    public GameObject errorname, errorAtio,errorPetName;
+    public GameObject petEdit,profile;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,11 +57,30 @@ public class profileSETUP : MonoBehaviour
         }
     
     }
-    public void toMenu()
+    public void SetUpPetName()
+    {
+        if (!PlayerPrefs.HasKey("petName"))
+        {
+            if (thePetName.text.Length > 0)
+            {
+                Debug.Log("pet name set up");
+                PlayerPrefs.SetString("petName", thePetName.text);
+               
+            }
+            else
+            {
+                errorPetName.SetActive(true);
+            }
+
+        }
+
+    }
+    public void ToPet()
     {
         if (PlayerPrefs.HasKey("username") && PlayerPrefs.HasKey("ratio"))
         {
-            SceneManager.LoadScene("Menu");
+            petEdit.SetActive(true);
+            profile.SetActive(false);
         }
         else if (!PlayerPrefs.HasKey("username"))
         {    
@@ -70,5 +90,17 @@ public class profileSETUP : MonoBehaviour
         {
             errorAtio.SetActive(true);
         }
+    }
+    public void ToMenu()
+    {
+        if (PlayerPrefs.HasKey("petName"))
+        {
+            SceneManager.LoadScene("Menu");
+        }
+        else if (!PlayerPrefs.HasKey("petName"))
+        {
+            errorPetName.SetActive(true);
+        }
+      
     }
 }
