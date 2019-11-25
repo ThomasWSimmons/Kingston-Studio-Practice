@@ -82,21 +82,6 @@ public class GameManager : MonoBehaviour
        
     }
 
-
-
-    //Update is called every frame.
-    void Update()
-    {
-        
-
-          
-    }
-
-    //Call this to add the passed in Enemy to the List of Enemy objects.
-
-    public void AddWandToList()
-    {
-    }
     void loadMenu()
     {
         SceneManager.LoadScene("Menu");

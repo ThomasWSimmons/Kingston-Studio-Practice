@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EventManager : MonoBehaviour
 {
     public GameObject Results;
     public GameObject checkMark;
-    public GameObject loading;
     private float timer;
     public GameObject scanningPage;
     private static bool Active;
@@ -15,7 +15,7 @@ public class EventManager : MonoBehaviour
 
 
     //result section
-    public Text theProductName,serving,calories,carbs,sugars,answer,description,injectionAmount,unitRatio;
+    public TMP_Text theProductName,serving,calories,carbs,sugars,injectionAmount1,injectionAmount2,unitRatio;
     
     public Image theImage;
    
@@ -47,13 +47,12 @@ public class EventManager : MonoBehaviour
                 if(System.Math.Abs(timer) < .01)
                 {
                     scanningPage.SetActive(false);
-                    loading.SetActive(true);
                 }
                 timer += Time.deltaTime;
                 
                 if(timer>1.5 && timer<1.7)
                 {
-                    loading.SetActive(false);
+  
                     checkMark.SetActive(true);
                 }
     
@@ -98,10 +97,8 @@ public class EventManager : MonoBehaviour
                 calories.text = "100 kCal";
                 carbs.text = "6.4g";
                 sugars.text = "6.4g";
-                answer.text = "don't eat too much sugar!";
-                description.text = "I don't think it's a good idea";
-                injectionAmount.text = "5";
-                unitRatio.text = "Your unit ratio is";
+                injectionAmount1.text = injectionAmount2.text= "5";
+                unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
                 //assign nutriments values here
                 break;
             case "coffee":
@@ -110,10 +107,8 @@ public class EventManager : MonoBehaviour
                 calories.text = "30 kCal";
                 carbs.text = "0g";
                 sugars.text = "0g";
-                answer.text = "don't drink too much coffee!";
-                description.text = "Wake up!";
-                injectionAmount.text = "2";
-                unitRatio.text = "Your unit ratio is";
+                injectionAmount1.text = injectionAmount2.text= "2";
+                unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
                 break;
         }
     }

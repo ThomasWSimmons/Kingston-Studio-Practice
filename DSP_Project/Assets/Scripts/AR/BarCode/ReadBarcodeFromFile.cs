@@ -7,8 +7,6 @@ public class ReadBarcodeFromFile : MonoBehaviour
 {
     public static Texture2D inputTexture; // Note: [x] Read/Write must be enabled from texture import settings
     private bool singleRead;
-    public GameObject loading;
-    public GameObject cross;
     public GameObject error;
     public Result result;
 
@@ -51,14 +49,12 @@ public class ReadBarcodeFromFile : MonoBehaviour
         }
         else
         {
-            loading.SetActive(false);
-            cross.SetActive(true);
+
             float timer = 0;
             while(timer<1f)
              {
               timer += Time.deltaTime;
              }
-            cross.SetActive(false);
             error.SetActive(true);
             doneReader = true;
             Debug.Log("no");

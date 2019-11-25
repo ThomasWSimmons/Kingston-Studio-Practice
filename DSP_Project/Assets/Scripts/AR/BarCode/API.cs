@@ -9,9 +9,9 @@ using System;
 public class API : MonoBehaviour
 {
     public GameObject result;
-    public GameObject loading;
+
     public GameObject check;
-    public GameObject cross;
+
     public GameObject errorNoMatch;
     public GameObject errorScanning;
     private const string endpoint = "https://world.openfoodfacts.org/api/v0/product/";
@@ -23,7 +23,8 @@ public class API : MonoBehaviour
     public static bool doneAPI;
 
     //result section
-    public TextMeshProUGUI theProductName, serving, calories, carbs, sugars, answer, description, injectionAmount, unitRatio;
+    public TextMeshProUGUI theProductName, serving, calories, carbs, sugars, unitRatio,carbcalculation,unroundedunit;
+    public TextMeshProUGUI[] injections;
     private string NutriScore;
     public RawImage theImage;
     public RawImage whichNutriscoreIMG;
@@ -41,7 +42,7 @@ public class API : MonoBehaviour
         {
             scanned = false;
             theURL = endpoint + barcode + ".json";
-            Debug.Log(theURL);
+
             if (theURL != null)
             {
                 StartCoroutine(GetRequest(theURL));
@@ -68,13 +69,12 @@ public class API : MonoBehaviour
             }
             else
             {
-                Debug.Log("getting infos");
+        
                 //INPUT INFOS HERE
                 string[] words = webRequest.downloadHandler.text.Split(',');
 
 
                 getProdName(words);//1st
-                Debug.Log("prod name ok");
                 //get the image
                 string imgURL = getProdImage(words);
                 UnityWebRequest request = UnityWebRequestTexture.GetTexture(imgURL);
@@ -83,19 +83,15 @@ public class API : MonoBehaviour
                     Debug.Log(request.error);
                 else
                     theImage.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-                Debug.Log("prod img ok");
                 //3rd
                 getProdServing(words);
-                Debug.Log("prod serving ok");
                 //4th nutriments
                 getProdSugar(words);
-                Debug.Log("prod sugar ok");
                 carbs.text=getProdCarb(words);
                 string carbohydrates = carbs.text;
     
                 int totalCarbs = 0;
                 //carbs can be a float so make sure to round it if it is a float
-                Debug.Log("Carbs "+carbohydrates);
                 if (carbohydrates.Contains("."))
                 {
 
@@ -121,10 +117,8 @@ public class API : MonoBehaviour
                     
                 }
                 carbs.text += "g";
-                Debug.Log("prod carbs ok");
 
                 getProdCalories(words);
-                Debug.Log("prod calories ok");
 
                 //5th nutriscore
                 getNutriScore(words);
@@ -139,24 +133,12 @@ public class API : MonoBehaviour
                     //if no nutriscore image not displayed
                     whichNutriscoreIMG.gameObject.SetActive(false);
                 }
-                Debug.Log("prod score ok");
 
                 //6th units
                 getInjection(totalCarbs);
-                Debug.Log("prod injection ok");
-                //get the impact based on the injection
-                int amount = 0;
-                if (!intParseCheck(injectionAmount.text, amount))
-                {
-                    errorActive();
-                }
-                amount = Int32.Parse(injectionAmount.text);
-                
-                getProdImpact(amount);
-                Debug.Log("prod impact ok");
+               
+           
                 getUnitRatio(totalCarbs);
-                Debug.Log("prod ratio ok");
-                loading.SetActive(false);
                 check.SetActive(true);
                 yield return new WaitForSeconds(1);
                 check.SetActive(false);
@@ -168,28 +150,24 @@ public class API : MonoBehaviour
     }
     void errorNoMatchActive()
     {
-        loading.SetActive(false);
-        cross.SetActive(true);
+
         float timer = 0;
         while (timer < 1f)
         {
             timer += Time.deltaTime;
         }
-        cross.SetActive(false);
         errorNoMatch.SetActive(true);
         doneAPI = true;
 
     }
     void errorActive()
     {
-        loading.SetActive(false);
-        cross.SetActive(true);
+
         float timer = 0;
         while (timer < 1f)
         {
             timer += Time.deltaTime;
         }
-        cross.SetActive(false);
         errorScanning.SetActive(true);
         doneAPI = true;
     
@@ -291,46 +269,27 @@ public class API : MonoBehaviour
         return MediaUrl;
 
     }
-    void getProdImpact(int injections)
-    {
-        if (injections>0 && injections<3)
-        {
-            answer.text = "This product fits your diet, but make sure to inject your insulin.";
-        }
-        else if(injections==3)
-        {
-            answer.text = "This product has a bit too much carbohydrates. Make sure you inject your insulin.";
-        }
-        else if(injections>3)
-        {
-            answer.text = "There is a lot of carbohydrates in this product. Make sure you inject your insulin!";
-        }
-    }
+    
     void getProdDescription(string nutriscore)
     {
         switch(nutriscore)
         {
             case "a":
-                description.text = "This product has a nutriscore of A !\n Good Job!";
                 whichNutriscoreIMG.texture = allNutriscore[0];
                 break;
             case "b":
-                description.text = "This product has a nutriscore of B !\n It's okay to consume it.";
                 whichNutriscoreIMG.texture = allNutriscore[1];
 
                 break;
             case "c":
-                description.text = "This product has a nutriscore of C !\n This is not the best for you.";
                 whichNutriscoreIMG.texture = allNutriscore[2];
 
                 break;
             case "d":
-                description.text = "This product has a nutriscore of D !\n You probably should not eat this everyday.";
                 whichNutriscoreIMG.texture = allNutriscore[3];
 
                 break;
             case "e":
-                description.text = "This product has a nutriscore of E !\n You should definitely avoid this type of food.";
                 whichNutriscoreIMG.texture = allNutriscore[4];
 
                 break;
@@ -341,23 +300,28 @@ public class API : MonoBehaviour
     {
         float toRound = (float)(carbsAmount / 10.0);
         int theInjection = (int)Math.Round(toRound);
-        injectionAmount.text = theInjection.ToString();
+        for (int i = 0; i < 3; i++)
+        {
+            injections[i].text = theInjection.ToString();
+        }
     }
     void getUnitRatio(int carbsAmount)
     {
+        int playerRatio;
         if (PlayerPrefs.HasKey("ratio"))
         {
-            int playerRatio= PlayerPrefs.GetInt("ratio");
-            unitRatio.text = "Your current ratio is 1 unit to "+playerRatio+" grams of carbohydrates\n";
+            playerRatio= PlayerPrefs.GetInt("ratio");
+            unitRatio.text = playerRatio.ToString();
         }
         else
         {
-            unitRatio.text = "Your current ratio is 1 unit to 10 grams of carbohydrates\n";
+            playerRatio = 10;
+            unitRatio.text = "";
         }
-        float unitAmount = (float)(carbsAmount / 10.0);
-        Debug.Log(unitAmount);
-        int rounded = (int)Math.Round(unitAmount);
-        unitRatio.text += carbsAmount.ToString() + "/10(ratio) =" + unitAmount.ToString() + " (rounded up)= " + rounded.ToString() + "units";
+        float unitAmount = (float)(carbsAmount / playerRatio);
+        Debug.Log(carbsAmount+"/"+playerRatio+"="+unitAmount);
+        carbcalculation.text = carbsAmount.ToString();
+        unroundedunit.text = unitAmount.ToString();
 
     }
     void getNutriScore(string[] theAnswer)
@@ -370,7 +334,6 @@ public class API : MonoBehaviour
                 string[] temporary = s.Split(':');
                 string[] theName = temporary[1].Split('"');
                 NutriScore = theName[1];
-                Debug.Log("nutriScore: " + NutriScore);
             }
         }
     }

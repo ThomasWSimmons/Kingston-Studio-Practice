@@ -7,6 +7,7 @@ public class manageScripts : MonoBehaviour
     public GameObject cameraRead;
     public GameObject reader;
     public GameObject requester;
+    public GameObject panel;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class manageScripts : MonoBehaviour
         {
             if(readCamera.doneCamera)
             {
+                panel.SetActive(false);
                 cameraRead.SetActive(false);
             }
         }
