@@ -10,7 +10,7 @@ public class MoveController : MonoBehaviour
     private Vector2 _touchOffset;
 
     private InstantTrackingController _controller;
-
+    public AudioSource myAudioSource;
     private void Start() {
         _controller = GetComponent<InstantTrackingController>();
     }
@@ -35,6 +35,26 @@ public class MoveController : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             RaycastHit hit;
 
+            if (Input.touches[0].phase == TouchPhase.Began)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                if (Physics.Raycast(ray, out hit))
+                {
+                    
+                    switch (hit.transform.name)
+                    {
+                        case "Sphere":
+                            myAudioSource.Play();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            else
+            {
+
+            
             /* If we're currently not dragging any augmentation, do a raycast to find one in the scene. */
             if (_activeObject == null) {
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(touch.position), out hit)) {
@@ -61,6 +81,8 @@ public class MoveController : MonoBehaviour
                     _activeObject.position = Vector3.Lerp(_activeObject.position, position, 0.25f);
                 }
             }
+
+        }
         } else {
             /* If there are no touches, stop dragging the currently dragged augmentation, if there is one. */
             _activeObject = null;

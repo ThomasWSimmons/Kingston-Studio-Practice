@@ -23,7 +23,6 @@ public class InstantTrackingController : SampleController
     /* The order in theses arrays indicate which button corresponds to which model. */
     public List<Button> Buttons;
     public List<GameObject> Models;
-    public GameObject pickable;
 
     //public Text MessageBox;
 
@@ -156,10 +155,6 @@ public class InstantTrackingController : SampleController
             GameObject modelPrefab = Models[modelIndex];
             Transform model = Instantiate(modelPrefab).transform;
             _activeModels.Add(model.gameObject);
-
-            GameObject toPick = pickable;
-            Transform toBePicked = Instantiate(toPick).transform;
-            toBePicked.parent = model;
             /* Set model position at touch position */
             var cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane p = new Plane(Vector3.up, Vector3.zero);
