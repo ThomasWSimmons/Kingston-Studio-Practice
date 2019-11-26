@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class profileSETUP : MonoBehaviour
 {
-    private customPet thePet;
-    public TMP_InputField theUserName,theUserRatio,thePetName;
-    private int theRatio;
-    public GameObject errorname, errorAtio,errorPetName;
-    public GameObject petEdit,profile;
+    
+    public TMP_InputField theUserName,thePassword,theEmail,theAvatarName, loginName,loginPassword;
+    public TMP_Dropdown theType, Ratio;
+    private int theRatio,theDiabeticType;
+    public GameObject errorname, errorAtio,errorPetName,errorPassword,errorEmail,errorType,errorLoginName,errorLoginPassword;
+    public GameObject profile;
+    public Toggle theCheck;
+    private bool okPass, okUserName;
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.SetInt("firstLaunch", 1);
+        okPass = okUserName = false;
+       // PlayerPrefs.SetInt("firstLaunch", 1);
     }
 
     // Update is called once per frame
@@ -23,10 +26,33 @@ public class profileSETUP : MonoBehaviour
     {
   
     }
-    public void setUpName()
+    public void compareUserName()
     {
-        if (!PlayerPrefs.HasKey("username"))
+        if(loginName.text.Equals(PlayerPrefs.GetString("username")))
         {
+            okUserName = true;
+
+        }
+        else if(loginName.text.Length<0 || !loginName.text.Equals(PlayerPrefs.GetString("username")))
+        {
+            errorLoginName.SetActive(true);
+        }
+    }
+    public void comparePassword()
+    {
+        if (loginPassword.text.Equals(PlayerPrefs.GetString("password")))
+        {
+            okPass = true;
+
+        }
+        else if (loginPassword.text.Length < 0 || !loginPassword.text.Equals(PlayerPrefs.GetString("password")))
+        {
+            errorLoginPassword.SetActive(true);
+        }
+    }
+    public void SetUpName()
+    {
+       
             if (theUserName.text.Length > 0)
             {
                 PlayerPrefs.SetString("username", theUserName.text);
@@ -36,35 +62,83 @@ public class profileSETUP : MonoBehaviour
                 errorname.SetActive(true);
             }
        
-        }
+        
     
     }
-    public void setUpRatio()
+    public void SetUpPassword()
     {
-        if (!PlayerPrefs.HasKey("ratio"))
-        {
-            if (theUserRatio.text.Length > 0)
+       
+            if (thePassword.text.Length > 0)
             {
-                theRatio = int.Parse(theUserRatio.text);
-                PlayerPrefs.SetInt("ratio", theRatio);
-                Debug.Log("ratio =" + theRatio);
+                PlayerPrefs.SetString("password", thePassword.text);
             }
             else
             {
-                errorAtio.SetActive(true);
+                errorPassword.SetActive(true);
             }
-           
-        }
+
+        
+
+    }
+    public void SetUpEmail()
+    {
+            if (theEmail.text.Length > 0)
+            {
+                PlayerPrefs.SetString("email", theEmail.text);
+            }
+            else
+            {
+                errorEmail.SetActive(true);
+            }
+
+        
+
+    }
+    public void SetUpType()
+    {
+        if (theType.value>0)
+            {
+                theDiabeticType = theType.value;
+                Debug.Log("type:"+theDiabeticType);
+                PlayerPrefs.SetInt("type", theDiabeticType);
+            }
+            else
+            {
+                errorType.SetActive(true);
+            }
+
+        
+
+    }
+    public void SetUpRatio()
+    {
+            if (Ratio.value>0)
+            {
+                
+                switch (Ratio.value)
+                {
+                    case 1:
+                        theRatio = 9;
+                        break;
+                    case 2:
+                        theRatio = 10;
+                        break;
+                    case 3:
+                        theRatio = 11;
+                        break;
+
+                }
+                PlayerPrefs.SetInt("ratio", theRatio);
+                Debug.Log("ratio =" + theRatio);
+            }
     
     }
     public void SetUpPetName()
     {
-        if (!PlayerPrefs.HasKey("petName"))
-        {
-            if (thePetName.text.Length > 0)
+        if (theAvatarName.text.Length > 0)
             {
                 Debug.Log("pet name set up");
-                PlayerPrefs.SetString("petName", thePetName.text);
+                PlayerPrefs.SetString("avatarName", theAvatarName.text);
                
             }
             else
@@ -72,35 +146,74 @@ public class profileSETUP : MonoBehaviour
                 errorPetName.SetActive(true);
             }
 
-        }
+        
 
     }
-    public void ToPet()
+    public void ToMainMenu()
     {
-        if (PlayerPrefs.HasKey("username") && PlayerPrefs.HasKey("ratio"))
+        if (PlayerPrefs.HasKey("username") && PlayerPrefs.HasKey("email") && PlayerPrefs.HasKey("type") && PlayerPrefs.HasKey("password") && PlayerPrefs.HasKey("avatarName"))
         {
-            petEdit.SetActive(true);
-            profile.SetActive(false);
+            if (PlayerPrefs.GetInt("type") == 1)
+            {
+                if (!PlayerPrefs.HasKey("ratio"))
+                {
+                    Debug.Log("error");
+                    errorAtio.SetActive(true);
+                }
+            }
+            else
+            {
+                Debug.Log("active");
+                GameManager.instance.MainMenu();
+                
+            }
+          
         }
         else if (!PlayerPrefs.HasKey("username"))
         {    
             errorname.SetActive(true);
         }
-        else if (!PlayerPrefs.HasKey("ratio"))
+        else if (!PlayerPrefs.HasKey("password"))
         {
-            errorAtio.SetActive(true);
+            errorPassword.SetActive(true);
+        }
+        else if (!PlayerPrefs.HasKey("email"))
+        {
+            errorEmail.SetActive(true);
+        }
+        else if (!PlayerPrefs.HasKey("type"))
+        {
+            errorType.SetActive(true);
         }
     }
     public void ToMenu()
     {
-        if (PlayerPrefs.HasKey("petName"))
+        if (okPass && okUserName)
         {
-            SceneManager.LoadScene("Menu");
+            GameManager.instance.MainMenu();
         }
-        else if (!PlayerPrefs.HasKey("petName"))
+        else if (!okPass)
         {
-            errorPetName.SetActive(true);
+            errorLoginPassword.SetActive(true);
+        }
+        else if(!okUserName)
+        {
+            errorLoginName.SetActive(true);
         }
       
+    }
+    public void setRememberMe()
+    {
+        if (theCheck.isOn)
+        {
+            Debug.Log("checked");
+            PlayerPrefs.SetString("remember", "ok");
+        }
+        else
+        {
+            Debug.Log("unchecked");
+            PlayerPrefs.DeleteKey("remember");
+
+        }
     }
 }

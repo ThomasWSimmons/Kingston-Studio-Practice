@@ -1,21 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class sceneSwitch : MonoBehaviour
 {
     // Start is called before the first frame update
     public void ARScan()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ARscene");
+        GameManager.instance.ARScan();
+        
     }
     public void MainMenu()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+        GameManager.instance.MainMenu();
+       
     }
     public void BarCode()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("BarCodeScanner");
+        GameManager.instance.BarCode();
+    }
+    public void experience()
+    {
+        GameManager.instance.experience();
+    }
+    public void Customisation()
+    {
+        SceneManager.LoadScene("AvatarCustomisation");
     }
     public void QuitApp()
     {

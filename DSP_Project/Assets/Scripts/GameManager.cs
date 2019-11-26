@@ -6,12 +6,12 @@ using UnityEngine.UI;                   //Allows us to use UI.
 
 public class GameManager : MonoBehaviour
 {
-
+    
     public float levelStartDelay = 2f;                      //Time to wait before starting level, in seconds.
                                                             //public int playerFoodPoints = 100;                      //Starting value for Player food points.
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
 
-
+    public GameObject login, register;
 
     //Awake is always called before any Start functions
     void Awake()
@@ -28,8 +28,24 @@ public class GameManager : MonoBehaviour
          *
          *
          */
-        
         PlayerPrefs.DeleteAll();
+       /* if(PlayerPrefs.HasKey("firsLog"))
+        {
+            if (!PlayerPrefs.HasKey("remember"))
+            {
+                login.SetActive(true);
+            }
+            else
+            {
+                MainMenu();
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetString("firstLog","ok");
+            register.SetActive(true);
+        }*/
+
         //Check if instance already exists
         if (instance == null)
 
@@ -47,16 +63,8 @@ public class GameManager : MonoBehaviour
 
         //SET UP PLAYER EXPERIENCE AMOUNT HERE
         //SET UP PLAYER LEVEL HERE
-        if (PlayerPrefs.HasKey("firstLaunch"))
-        {
-            Debug.Log("to menu");
-            loadMenu();
-        }
-        else
-        {
-            Debug.Log("to setup");
-            loadPlayerProfile();
-        }
+
+        
     }
 
     //this is called only once, and the paramter tell it to be called only after the scene was loaded
@@ -82,15 +90,27 @@ public class GameManager : MonoBehaviour
        
     }
 
-    void loadMenu()
+    public void ARScan()
+    {
+
+        SceneManager.LoadScene("ARscene");
+    }
+    public void MainMenu()
     {
         SceneManager.LoadScene("Menu");
     }
-    void loadPlayerProfile()
+    public void BarCode()
     {
-        SceneManager.LoadScene("profileSetUp");
+        SceneManager.LoadScene("BarCodeScanner");
     }
-
+    public void experience()
+    {
+        SceneManager.LoadScene("experience");
+    }
+    public void customisation()
+    {
+        SceneManager.LoadScene("AvatarCustomisation");
+    }
 
 
 
