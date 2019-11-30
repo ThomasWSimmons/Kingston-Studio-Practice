@@ -127,6 +127,7 @@ public class API : MonoBehaviour
                 {
                     string theNutrScore = NutriScore;
                     getProdDescription(theNutrScore);//get input based on nutriscore
+                    GameManager.instance.holdNutriscore(theNutrScore);
                 }
                 else
                 {

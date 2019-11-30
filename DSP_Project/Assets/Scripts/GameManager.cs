@@ -12,39 +12,20 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
 
     public GameObject login, register;
-
+    public int playerExperience, playerLevel;
     //Awake is always called before any Start functions
     void Awake()
     {
-        /*
-         *
-         *
-         *
-         *
-         * A EFFACER A LA FIN
-         *
-         *
-         *
-         *
-         *
-         */
-        PlayerPrefs.DeleteAll();
-       /* if(PlayerPrefs.HasKey("firsLog"))
-        {
-            if (!PlayerPrefs.HasKey("remember"))
-            {
-                login.SetActive(true);
-            }
-            else
-            {
-                MainMenu();
-            }
+       
+        if (Game.current == null)
+        { 
+            PlayerPrefs.DeleteAll();
+            Debug.Log("new game");
+            Game.current = new Game();
+            playerExperience = Game.current.thePlayer.experience;
+            playerLevel = Game.current.thePlayer.level;
+   
         }
-        else
-        {
-            PlayerPrefs.SetString("firstLog","ok");
-            register.SetActive(true);
-        }*/
 
         //Check if instance already exists
         if (instance == null)
@@ -111,7 +92,32 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("AvatarCustomisation");
     }
-
+    public void holdNutriscore(string theNutriscore)
+    {
+        switch(theNutriscore)
+        {
+            case "a":
+                PlayerPrefs.SetString("nutriGrade", "a");
+                PlayerPrefs.SetInt("nutriExp", 25);
+                break;
+            case "b":
+                PlayerPrefs.SetString("nutriGrade", "b");
+                PlayerPrefs.SetInt("nutriExp", 20);
+                break;
+            case "c":
+                PlayerPrefs.SetString("nutriGrade", "c");
+                PlayerPrefs.SetInt("nutriExp", 15);
+                break;
+            case "d":
+                PlayerPrefs.SetString("nutriGrade", "d");
+                PlayerPrefs.SetInt("nutriExp", 10);
+                break;
+            case "e":
+                PlayerPrefs.SetString("nutriGrade", "e");
+                PlayerPrefs.SetInt("nutriExp", 5);
+                break;
+        }
+    }
 
 
 

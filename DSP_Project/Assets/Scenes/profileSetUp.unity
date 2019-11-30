@@ -8552,6 +8552,8 @@ MonoBehaviour:
   levelStartDelay: 2
   login: {fileID: 1067940776}
   register: {fileID: 1413500307}
+  playerExperience: 0
+  playerLevel: 0
 --- !u!4 &1359083216
 Transform:
   m_ObjectHideFlags: 0
@@ -9096,8 +9098,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1039967002}
-        m_MethodName: ToPet
+      - m_Target: {fileID: 1359083215}
+        m_MethodName: MainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -17,7 +17,8 @@ public class EventManager : MonoBehaviour
     //result section
     public TMP_Text theProductName,serving,calories,carbs,sugars,injectionAmount1,injectionAmount2,unitRatio;
     
-    public Image theImage;
+    public Image theImage, theNutriscore;
+    public Sprite[] nutriscores;
    
     // Start is called before the first frame update
     void Start()
@@ -98,7 +99,10 @@ public class EventManager : MonoBehaviour
                 carbs.text = "6.4g";
                 sugars.text = "6.4g";
                 injectionAmount1.text = injectionAmount2.text= "5";
+                theNutriscore.sprite = nutriscores[0];
+                GameManager.instance.holdNutriscore("a");
                 unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+                
                 //assign nutriments values here
                 break;
             case "coffee":
@@ -108,6 +112,8 @@ public class EventManager : MonoBehaviour
                 carbs.text = "0g";
                 sugars.text = "0g";
                 injectionAmount1.text = injectionAmount2.text= "2";
+                theNutriscore.sprite = nutriscores[1];
+                GameManager.instance.holdNutriscore("b");
                 unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
                 break;
         }
