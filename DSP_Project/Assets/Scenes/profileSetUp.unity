@@ -5919,7 +5919,7 @@ MonoBehaviour:
   theUserName: {fileID: 1007387743}
   thePassword: {fileID: 889756056}
   theEmail: {fileID: 955454854}
-  theAvatarName: {fileID: 0}
+  theAvatarName: {fileID: 468361274}
   loginName: {fileID: 1365920312}
   loginPassword: {fileID: 1657175515}
   theType: {fileID: 1031040552}
@@ -8549,9 +8549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e41fccdccae24455a51a62ae0053ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelStartDelay: 2
-  login: {fileID: 1067940776}
-  register: {fileID: 1413500307}
   playerExperience: 0
   playerLevel: 0
 --- !u!4 &1359083216

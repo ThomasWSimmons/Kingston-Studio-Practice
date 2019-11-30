@@ -15,22 +15,17 @@ public class mainMenuExperience : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        expTotal.text = Game.current.thePlayer.experience.ToString();
-        Level.text = Game.current.thePlayer.level.ToString();
         Debug.Log("EXPERIENCE" + Game.current.thePlayer.experience + " LEVEL" + Game.current.thePlayer.level);
-        try
-        {
-            expNum = Int32.Parse(expTotal.text);
-            theLevel = Int32.Parse(Level.text);
-        }
-        catch (FormatException e)
-        {
-            Console.WriteLine(e.Message);
-        }
+        expTotal.text = Game.current.thePlayer.experience+" exp total";
+        Level.text = "Level "+Game.current.thePlayer.level;
+        expNum = Game.current.thePlayer.experience;
+        theLevel = Game.current.thePlayer.level;
+        
         currentMissingExp = totalExperience-expNum;
-        ExpMissing.text = currentMissingExp.ToString();
+        Debug.Log(currentMissingExp + "MISSING");
+        ExpMissing.text = currentMissingExp+ "exp to";
         theNext = theLevel + 1;
-        NextLevel.text = theNext.ToString();
+        NextLevel.text = "level "+theNext;
         theSlider.value = expNum/100f;
     }
 

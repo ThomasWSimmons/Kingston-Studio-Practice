@@ -7,11 +7,10 @@ using UnityEngine.UI;                   //Allows us to use UI.
 public class GameManager : MonoBehaviour
 {
     
-    public float levelStartDelay = 2f;                      //Time to wait before starting level, in seconds.
                                                             //public int playerFoodPoints = 100;                      //Starting value for Player food points.
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
 
-    public GameObject login, register;
+
     public int playerExperience, playerLevel;
     //Awake is always called before any Start functions
     void Awake()
@@ -24,6 +23,7 @@ public class GameManager : MonoBehaviour
             Game.current = new Game();
             playerExperience = Game.current.thePlayer.experience;
             playerLevel = Game.current.thePlayer.level;
+            Debug.Log(playerExperience + " " + playerLevel);
    
         }
 

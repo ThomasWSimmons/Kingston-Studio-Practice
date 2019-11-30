@@ -19,8 +19,8 @@ public class updateExperience : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        expTotal.text = Game.current.thePlayer.experience.ToString();
-        Level.text = Game.current.thePlayer.level.ToString();
+        expTotal.text = Game.current.thePlayer.experience +"exp total";
+        Level.text = "Level "+Game.current.thePlayer.level.ToString();
         Debug.Log("EXPERIENCE" + Game.current.thePlayer.experience + " LEVEL" + Game.current.thePlayer.level);
         try
         {
@@ -32,9 +32,9 @@ public class updateExperience : MonoBehaviour
             Console.WriteLine(e.Message);
         }
         currentMissingExp = totalExperience - expNum;
-        ExpMissing.text = currentMissingExp.ToString();
+        ExpMissing.text = currentMissingExp+ " exp to";
         theNext = theLevel + 1;
-        NextLevel.text = theNext.ToString();
+        NextLevel.text = "Level "+theNext;
         theSlider.value = expNum / 100f;
         levelUpNutri =levelUpScan= false;
         single = toIncrease=left=0;
@@ -52,8 +52,8 @@ public class updateExperience : MonoBehaviour
         {
             Debug.Log("1 - increasing of: " + toIncrease);
             StartCoroutine(udpateSlider(toIncrease));
-            ExpMissing.text = currentMissingExp.ToString();
-            Game.current.thePlayer.experience = toIncrease;
+            ExpMissing.text = currentMissingExp + " exp to";
+            
             single++;
         }
         else if (levelUpNutri && single == 0)//level up detected after nutri exp added - level up - then add rest
@@ -61,23 +61,24 @@ public class updateExperience : MonoBehaviour
             Debug.Log("2 - increasing of: " + toIncrease);
             StartCoroutine(updateSliderHighlight(toIncrease,"nutri"));
             updateLevel();
-            
+            Debug.Log("LEVELup - increasing of: " + (left+scanExp));
             StartCoroutine(updateSliderHighlight(left + scanExp, "scan"));
-            expTotal.text = (left + scanExp).ToString();
+            expTotal.text = (left + scanExp) + " exp total";
             currentMissingExp = totalExperience-(left+scanExp);
-            ExpMissing.text = currentMissingExp.ToString();
-            Game.current.thePlayer.experience = left + scanExp;
+            ExpMissing.text = currentMissingExp + " exp to";
+            
             single++;
         }
         else if (levelUpScan && single == 0)//level up detected after scan exp added - level up then add rest to new slider
         {
+            Debug.Log("3 - increasing of: " + toIncrease);
             StartCoroutine(updateTotalExp(toIncrease));
             updateLevel();
-  
+            Debug.Log("LEVELup - increasing of: " + left);
             StartCoroutine(udpateSlider(left));
-            Game.current.thePlayer.experience = left;
+            expTotal.text = left+ " exp total";
             currentMissingExp = totalExperience - left;
-            ExpMissing.text = currentMissingExp.ToString();
+            ExpMissing.text = currentMissingExp + " exp to";
             single++;
         }
        
@@ -115,6 +116,7 @@ public class updateExperience : MonoBehaviour
         int theExpAfterNutri = Game.current.thePlayer.experience + nutriExp;
         int theExpAfterScan = theExpAfterNutri + scanExp;
         currentMissingExp = totalExperience - theExpAfterScan;
+        Game.current.thePlayer.experience = theExpAfterScan;
         toIncrease = theExpAfterScan-current;
         if(theExpAfterNutri>totalExperience)
         {
@@ -138,13 +140,13 @@ public class updateExperience : MonoBehaviour
         Game.current.thePlayer.level = current;//update Game info
         theSlider.value = 0;
         Level.text = current.ToString();
-        NextLevel.text = (current + 1).ToString();
+        NextLevel.text = "Level "+(current + 1);
     }
     void displayLevel()
     {
         int current = Game.current.thePlayer.level;
-        Level.text = current.ToString();
-        NextLevel.text = (current + 1).ToString();
+        Level.text = "Level " + current;
+        NextLevel.text = "Level " + (current + 1);
     }
 
     IEnumerator updateTotalExp(int exp)
