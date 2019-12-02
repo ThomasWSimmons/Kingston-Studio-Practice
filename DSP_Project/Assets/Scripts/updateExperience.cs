@@ -8,8 +8,8 @@ using System;
 public class updateExperience : MonoBehaviour
 {
     public Sprite[] whichNutriscore;
-    public TMP_Text expTotal, Level, ExpMissing, NextLevel, expNutrigrade;
-    public GameObject highlightNutri, highlightScan;
+    public TMP_Text expTotal, Level, ExpMissing, NextLevel, expNutrigrade,youAreNow;
+    public GameObject highlightNutri, highlightScan,plusOne,plusLevel,exit;
     public Slider theSlider;
     public Image nutrigrade;
     private const int totalExperience = 100;
@@ -22,15 +22,10 @@ public class updateExperience : MonoBehaviour
         expTotal.text = Game.current.thePlayer.experience +"exp total";
         Level.text = "Level "+Game.current.thePlayer.level.ToString();
         Debug.Log("EXPERIENCE" + Game.current.thePlayer.experience + " LEVEL" + Game.current.thePlayer.level);
-        try
-        {
-            expNum = Int32.Parse(expTotal.text);
-            theLevel = Int32.Parse(Level.text);
-        }
-        catch (FormatException e)
-        {
-            Console.WriteLine(e.Message);
-        }
+        expNum = Game.current.thePlayer.experience;
+        theLevel = Game.current.thePlayer.level;
+
+
         currentMissingExp = totalExperience - expNum;
         ExpMissing.text = currentMissingExp+ " exp to";
         theNext = theLevel + 1;
@@ -59,10 +54,8 @@ public class updateExperience : MonoBehaviour
         else if (levelUpNutri && single == 0)//level up detected after nutri exp added - level up - then add rest
         {
             Debug.Log("2 - increasing of: " + toIncrease);
-            StartCoroutine(updateSliderHighlight(toIncrease,"nutri"));
-            updateLevel();
-            Debug.Log("LEVELup - increasing of: " + (left+scanExp));
-            StartCoroutine(updateSliderHighlight(left + scanExp, "scan"));
+            Debug.Log("LEVELup - increasing of: " + (left + scanExp));
+            StartCoroutine(updateSliderHighlight(toIncrease,(left+scanExp)));
             expTotal.text = (left + scanExp) + " exp total";
             currentMissingExp = totalExperience-(left+scanExp);
             ExpMissing.text = currentMissingExp + " exp to";
@@ -72,10 +65,9 @@ public class updateExperience : MonoBehaviour
         else if (levelUpScan && single == 0)//level up detected after scan exp added - level up then add rest to new slider
         {
             Debug.Log("3 - increasing of: " + toIncrease);
-            StartCoroutine(updateTotalExp(toIncrease));
-            updateLevel();
             Debug.Log("LEVELup - increasing of: " + left);
-            StartCoroutine(udpateSlider(left));
+            StartCoroutine(updateSliderHighlight(toIncrease,left));
+           
             expTotal.text = left+ " exp total";
             currentMissingExp = totalExperience - left;
             ExpMissing.text = currentMissingExp + " exp to";
@@ -128,7 +120,7 @@ public class updateExperience : MonoBehaviour
         {
             levelUpScan = true;
             toIncrease = totalExperience - current;
-            left = scanExp - toIncrease;
+            left = toIncrease-scanExp;
         }
         
         
@@ -137,10 +129,13 @@ public class updateExperience : MonoBehaviour
     {
         int current = Game.current.thePlayer.level;
         current += 1;
+        plusLevel.SetActive(true);
         Game.current.thePlayer.level = current;//update Game info
         theSlider.value = 0;
-        Level.text = current.ToString();
+        Game.current.thePlayer.experience = 0;
+        Level.text = "Level " + current.ToString();
         NextLevel.text = "Level "+(current + 1);
+        youAreNow.text = "You are now Level" + current.ToString();
     }
     void displayLevel()
     {
@@ -149,67 +144,71 @@ public class updateExperience : MonoBehaviour
         NextLevel.text = "Level " + (current + 1);
     }
 
-    IEnumerator updateTotalExp(int exp)
+    IEnumerator updateSliderHighlight(int exp1,int exp2)//slider update with level up
     {
+        
         highlightNutri.SetActive(true);
+               
         yield return new WaitForSeconds(1);
-        for(int i=0; i<exp;i++)
+        for (int i = 0; i < exp1; i++)
         {
-            theSlider.value += 1/100f;
-            expTotal.text = (int)(theSlider.value * 100f) + " exp total points";
-            yield return new WaitForSeconds(.25f);
-        }
-        highlightNutri.SetActive(false);
-        yield return new WaitForSeconds(1f);
-        highlightScan.SetActive(true);
-        yield return new WaitForSeconds(1);
-        for (int i = 0; i < exp; i++)
-        {
-            theSlider.value += 1/100f;
-            expTotal.text = (int)(theSlider.value * 100f) + " exp total points";
-            yield return new WaitForSeconds(.25f);
-        }
-        highlightScan.SetActive(false);
-
-    }
-    IEnumerator updateSliderHighlight(int exp, string highlight)
-    {
-        switch(highlight)
-        {
-            case "nutri":
-                highlightNutri.SetActive(true);
-                break;
-            case "scan":
-                highlightScan.SetActive(true);
-                break;
-        }
-        yield return new WaitForSeconds(1);
-        for (int i = 0; i < exp; i++)
-        {
+            plusOne.SetActive(true);
             theSlider.value += 1 / 100f;
             expTotal.text = (int)(theSlider.value * 100f) + " exp total points";
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.15f);
+            plusOne.SetActive(false);
         }
-        switch (highlight)
+        highlightNutri.SetActive(false);
+        Math.Round(theSlider.value);
+        updateLevel();
+        yield return new WaitForSeconds(1);
+        plusLevel.SetActive(false);
+        highlightScan.SetActive(true);
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < exp2; i++)
         {
-            case "nutri":
-                highlightNutri.SetActive(false);
-                break;
-            case "scan":
-                highlightScan.SetActive(false);
-                break;
+            plusOne.SetActive(true);
+            theSlider.value += 1 / 100f;
+            expTotal.text = (int)(theSlider.value * 100f) + " exp total points";
+            yield return new WaitForSeconds(.15f);
+            plusOne.SetActive(false);
         }
+        highlightScan.SetActive(false);
+        Math.Round(theSlider.value);
+        Game.current.thePlayer.experience = exp2;
+        exit.SetActive(true);
 
     }
    
-    IEnumerator udpateSlider(int exp)
+    IEnumerator udpateSlider(int exp)//slider update without level up
     {
-        for (int i = 0; i < exp; i++)
+        int exp1 = exp - scanExp;
+        highlightNutri.SetActive(true);
+
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < exp1; i++)
         {
+            plusOne.SetActive(true);
             theSlider.value += 1 / 100f;
             expTotal.text = (int)(theSlider.value * 100f) + " exp total points";
-            Debug.Log(theSlider.value);
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.1f);
+            plusOne.SetActive(false);
         }
+        Math.Round(theSlider.value);
+        highlightNutri.SetActive(false);
+        yield return new WaitForSeconds(1);
+        highlightScan.SetActive(true);
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < scanExp; i++)
+        {
+            plusOne.SetActive(true);
+            theSlider.value += 1 / 100f;
+            expTotal.text = (int)(theSlider.value * 100f) + " exp total points";
+            yield return new WaitForSeconds(.1f);
+            plusOne.SetActive(false);
+        }
+        highlightScan.SetActive(false);
+        Math.Round(theSlider.value);
+        exit.SetActive(true);
     }
 }
