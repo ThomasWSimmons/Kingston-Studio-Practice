@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
             playerExperience = Game.current.thePlayer.experience;
             playerLevel = Game.current.thePlayer.level;
             Debug.Log(playerExperience + " " + playerLevel);
-   
+            containerGraph.valList = new List<int>(); 
+
         }
 
         //Check if instance already exists
@@ -91,6 +92,14 @@ public class GameManager : MonoBehaviour
     public void customisation()
     {
         SceneManager.LoadScene("AvatarCustomisation");
+    }
+    public void trending()
+    {
+        SceneManager.LoadScene("Chart");
+    }
+    public void toSignPage()
+    {
+        SceneManager.LoadScene("profileSetUp");
     }
     public void holdNutriscore(string theNutriscore)
     {

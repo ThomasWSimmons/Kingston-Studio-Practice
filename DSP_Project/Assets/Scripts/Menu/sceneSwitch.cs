@@ -26,7 +26,16 @@ public class sceneSwitch : MonoBehaviour
     }
     public void Customisation()
     {
-        SceneManager.LoadScene("AvatarCustomisation");
+        GameManager.instance.customisation();
+    }
+    public void Trends()
+    {
+        GameManager.instance.trending();
+
+    }
+    public void SignPage()
+    {
+        GameManager.instance.toSignPage();
     }
     public void QuitApp()
     {

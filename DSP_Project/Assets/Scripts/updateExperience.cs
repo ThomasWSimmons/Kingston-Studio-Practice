@@ -81,18 +81,23 @@ public class updateExperience : MonoBehaviour
         switch (PlayerPrefs.GetString("nutriGrade"))
         {
             case "a":
+                containerGraph.updateTheList(100);
                 nutrigrade.sprite = whichNutriscore[0];
                 break;
             case "b":
+                containerGraph.updateTheList(80);
                 nutrigrade.sprite = whichNutriscore[1];
                 break;
             case "c":
+                containerGraph.updateTheList(60);
                 nutrigrade.sprite = whichNutriscore[2];
                 break;
             case "d":
+                containerGraph.updateTheList(40);
                 nutrigrade.sprite = whichNutriscore[3];
                 break;
             case "e":
+                containerGraph.updateTheList(20);
                 nutrigrade.sprite = whichNutriscore[4];
                 break;
         }

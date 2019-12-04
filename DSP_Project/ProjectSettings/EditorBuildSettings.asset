@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AvatarCustomisation.unity
     guid: a5ff186d63ece47b1ac0f15fba4fcb62
+  - enabled: 1
+    path: Assets/Scenes/Chart.unity
+    guid: bef0894ddb6104a07847aed750fb5465
   m_configObjects: {}
