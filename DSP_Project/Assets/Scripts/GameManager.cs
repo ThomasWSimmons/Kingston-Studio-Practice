@@ -12,12 +12,14 @@ public class GameManager : MonoBehaviour
 
 
     public int playerExperience, playerLevel;
+    public static int theMenu;
     //Awake is always called before any Start functions
     void Awake()
     {
-       
+
         if (Game.current == null)
-        { 
+        {
+            theMenu = 0;
             PlayerPrefs.DeleteAll();
             Debug.Log("new game");
             Game.current = new Game();
@@ -26,6 +28,11 @@ public class GameManager : MonoBehaviour
             Debug.Log(playerExperience + " " + playerLevel);
             containerGraph.valList = new List<int>(); 
 
+        }
+        else
+        {
+            theMenu = 1;
+            saveSystem.LoadPlayer();
         }
 
         //Check if instance already exists
@@ -47,6 +54,12 @@ public class GameManager : MonoBehaviour
         //SET UP PLAYER LEVEL HERE
 
         
+    }
+    void OnApplicationQuit()
+    {
+        saveSystem.SavePlayer();
+
+        Debug.Log("Application ending after " + Time.time + " seconds");
     }
 
     //this is called only once, and the paramter tell it to be called only after the scene was loaded
@@ -71,7 +84,21 @@ public class GameManager : MonoBehaviour
     {
        
     }
+    public void Resume()
+    {
+       
+        Time.timeScale = 1f;
+    }
+    public void Pause()
+    {
+       
+        Time.timeScale = 0f;
 
+    }
+    public void QuitApp()
+    {
+        Application.Quit();
+    }
     public void ARScan()
     {
 
@@ -79,6 +106,11 @@ public class GameManager : MonoBehaviour
     }
     public void MainMenu()
     {
+        if(theMenu==0)
+        {
+            theMenu = 1;
+            Debug.Log(theMenu);
+        }
         SceneManager.LoadScene("Menu");
     }
     public void BarCode()

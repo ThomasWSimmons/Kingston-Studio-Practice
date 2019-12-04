@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class sceneSwitch : MonoBehaviour
 {
+    public GameObject quitPanel;
     // Start is called before the first frame update
     public void ARScan()
     {
@@ -22,6 +23,10 @@ public class sceneSwitch : MonoBehaviour
     }
     public void experience()
     {
+        if(containerGraph.scanned!=1)
+        {
+            containerGraph.scanned = 1;
+        }
         GameManager.instance.experience();
     }
     public void Customisation()
@@ -42,12 +47,19 @@ public class sceneSwitch : MonoBehaviour
         //if click on settings
         Application.Quit();
     }
-    public void Switch()
+    private void Update()
     {
-    
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(SceneManager.GetActiveScene().name=="ARscene")
+            {
+                GameManager.instance.Pause();
+            }
+            quitPanel.SetActive(true);
+        }
     }
 
-   
+
 
 }
 

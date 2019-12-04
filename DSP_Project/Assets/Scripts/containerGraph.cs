@@ -6,6 +6,7 @@ using CodeMonkey.Utils;
 public class containerGraph : MonoBehaviour
 {
     private RectTransform graphContainer;
+    public static int scanned;
     public GameObject error;
     [SerializeField]
     private Sprite circleSprite;
@@ -27,7 +28,7 @@ public class containerGraph : MonoBehaviour
     }
     private void checkList()
     {
-        if (valList!=null)
+        if (valList != null && scanned == 1)
         {
             Debug.Log(valList.Count);
             showGraph(valList);
