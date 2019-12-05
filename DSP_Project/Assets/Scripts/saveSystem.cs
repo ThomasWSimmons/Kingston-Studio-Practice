@@ -13,14 +13,14 @@ public static class saveSystem
 		isSaving = 1;
 		saved.Add(Game.current);
 		BinaryFormatter formatter = new BinaryFormatter();
-		string path = Application.persistentDataPath + "/player.gd";
+		string path = Application.persistentDataPath + "/playerInfo.gd";
 		FileStream file = File.Create(path);
 		formatter.Serialize(file, saved);//converts player data to binary file
 		file.Close();
 	}
 	public static void LoadPlayer()
 	{
-		string path = Application.persistentDataPath + "/player.gd";
+		string path = Application.persistentDataPath + "/playerInfo.gd";
 		if (File.Exists(path))
 		{
 

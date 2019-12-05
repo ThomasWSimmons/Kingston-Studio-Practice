@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;       //Allows us to use Lists. 
 using UnityEngine.UI;                   //Allows us to use UI.
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,8 +18,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
 
-        if (Game.current == null)
-        {
+       
+      if (!File.Exists(Application.persistentDataPath + "/playerInfo.gd"))
+        { 
+               
             theMenu = 0;
             PlayerPrefs.DeleteAll();
             Debug.Log("new game");
