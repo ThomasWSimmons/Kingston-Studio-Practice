@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
                                                             //public int playerFoodPoints = 100;                      //Starting value for Player food points.
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
 
-
+    public static int indexB, indexH, indexK, indexF;
     public int playerExperience, playerLevel;
     public static int theMenu;
     //Awake is always called before any Start functions
@@ -19,13 +19,19 @@ public class GameManager : MonoBehaviour
     {
 
        
-      if (!File.Exists(Application.persistentDataPath + "/playerInfo.gd"))
+      if (!File.Exists(Application.persistentDataPath + "/ThePlayerInfo.gd"))
         { 
                
-            theMenu = 0;
+            
             PlayerPrefs.DeleteAll();
             Debug.Log("new game");
             Game.current = new Game();
+            Game.current.thePlayer.experience = playerExperience;
+            Game.current.thePlayer.level = playerLevel;
+            Game.current.thePlayer.bodyIndex = indexB;
+            Game.current.thePlayer.hairIndex = indexH;
+            Game.current.thePlayer.kitIndex = indexK;
+            Game.current.thePlayer.faceIndex = indexF;
             playerExperience = Game.current.thePlayer.experience;
             playerLevel = Game.current.thePlayer.level;
             Debug.Log(playerExperience + " " + playerLevel);
@@ -34,8 +40,28 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            theMenu = 1;
+           
             saveSystem.LoadPlayer();
+            Game.current = new Game();
+            playerExperience = saveSystem.experience;
+            playerLevel = saveSystem.level;
+            indexB = saveSystem.body;
+            indexH = saveSystem.hair;
+            indexK = saveSystem.kit;
+            indexF = saveSystem.face;
+            theMenu = saveSystem.mainMenu;
+            Debug.Log(theMenu);
+            Game.current.thePlayer.experience = playerExperience;
+            Game.current.thePlayer.level = playerLevel;
+            Game.current.thePlayer.bodyIndex = indexB;
+            Game.current.thePlayer.hairIndex = indexH;
+            Game.current.thePlayer.kitIndex = indexK;
+            Game.current.thePlayer.faceIndex = indexF;
+            containerGraph.valList = new List<int>();//for now list of values re initialised
+            if(saveSystem.menu==1)//if user checked remember me
+            {
+                MainMenu();
+            }
         }
 
         //Check if instance already exists
@@ -52,11 +78,10 @@ public class GameManager : MonoBehaviour
 
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
-
         //SET UP PLAYER EXPERIENCE AMOUNT HERE
         //SET UP PLAYER LEVEL HERE
 
-        
+
     }
     void OnApplicationQuit()
     {
@@ -112,7 +137,12 @@ public class GameManager : MonoBehaviour
         if(theMenu==0)
         {
             theMenu = 1;
-            Debug.Log(theMenu);
+            PlayerPrefs.SetInt("hasLoggedIn", 1);
+            Debug.Log("the MENU:"+theMenu);
+        }
+        else
+        {
+            Debug.Log("the menu is " + theMenu);
         }
         SceneManager.LoadScene("Menu");
     }
@@ -134,17 +164,19 @@ public class GameManager : MonoBehaviour
     }
     public void toSignPage()
     {
+        PlayerPrefs.DeleteKey("remember");
         SceneManager.LoadScene("profileSetUp");
     }
-    public void holdNutriscore(string theNutriscore)
+    public void holdNutriscore(string score)
     {
-        switch(theNutriscore)
+        switch(score)
         {
             case "a":
                 PlayerPrefs.SetString("nutriGrade", "a");
                 PlayerPrefs.SetInt("nutriExp", 25);
                 break;
             case "b":
+              
                 PlayerPrefs.SetString("nutriGrade", "b");
                 PlayerPrefs.SetInt("nutriExp", 20);
                 break;
@@ -153,17 +185,19 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("nutriExp", 15);
                 break;
             case "d":
+                
                 PlayerPrefs.SetString("nutriGrade", "d");
                 PlayerPrefs.SetInt("nutriExp", 10);
                 break;
             case "e":
+              
                 PlayerPrefs.SetString("nutriGrade", "e");
                 PlayerPrefs.SetInt("nutriExp", 5);
                 break;
         }
+        manageAppearence.ChangeEmotion=true;
     }
-
-
+ 
 
 }
 

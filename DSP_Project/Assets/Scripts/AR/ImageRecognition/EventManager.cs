@@ -13,7 +13,7 @@ public class EventManager : MonoBehaviour
     private static bool Active;
     private static string theName;
 
-
+    
     //result section
     public TMP_Text theProductName,serving,calories,carbs,sugars,injectionAmount1,injectionAmount2,unitRatio;
     
@@ -93,6 +93,33 @@ public class EventManager : MonoBehaviour
     {
         switch (name)
         {
+            case "grappes":
+                theProductName.text = "Grappes";
+                serving.text = "100g";
+                calories.text = "70 kCal";
+                carbs.text = "17g";
+                sugars.text = "16g";
+                injectionAmount1.text = injectionAmount2.text = "2";
+                theNutriscore.texture = nutriscores[0];
+                theImage.texture = product[2];
+                GameManager.instance.holdNutriscore("a");
+                unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+
+
+                //assign nutriments values here
+                break;
+            case "popcorn":
+                theProductName.text = "PopCorn";
+                serving.text = "30g";
+                calories.text = "142 kCal";
+                carbs.text = "19g";
+                sugars.text = "12g";
+                injectionAmount1.text = injectionAmount2.text = "2";
+                theNutriscore.texture = nutriscores[2];
+                theImage.texture = product[3];
+                GameManager.instance.holdNutriscore("d");
+                unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+                break;
             case "sugar":
                 theProductName.text = "sugar";
                 serving.text = "8g";
@@ -117,7 +144,7 @@ public class EventManager : MonoBehaviour
                 injectionAmount1.text = injectionAmount2.text= "1";
                 theNutriscore.texture = nutriscores[0];
                 theImage.texture = product[0];
-                GameManager.instance.holdNutriscore("a");
+                GameManager.instance.holdNutriscore("b");
                 unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
                 break;
         }

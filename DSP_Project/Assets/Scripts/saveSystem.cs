@@ -7,29 +7,64 @@ using System.Collections.Generic;
 public static class saveSystem
 {
     public static List<Game> saved = new List<Game>();
+    public static int experience, level,menu,body,hair,kit,face,mainMenu;
 	public static int isSaving;
 	public static void SavePlayer()
 	{
 		isSaving = 1;
-		saved.Add(Game.current);
-		BinaryFormatter formatter = new BinaryFormatter();
-		string path = Application.persistentDataPath + "/playerInfo.gd";
+        Game.current.thePlayer.currentMenu = GameManager.theMenu;
+        Game.current.thePlayer.experience = PlayerPrefs.GetInt("experience");
+        Game.current.thePlayer.level = PlayerPrefs.GetInt("level");
+        Game.current.thePlayer.bodyIndex=PlayerPrefs.GetInt("bodyIndex");
+        Game.current.thePlayer.hairIndex= PlayerPrefs.GetInt("hairIndex");
+        Game.current.thePlayer.kitIndex= PlayerPrefs.GetInt("kitIndex");
+        Game.current.thePlayer.faceIndex=PlayerPrefs.GetInt("faceIndex");
+        BinaryFormatter formatter = new BinaryFormatter();
+		string path = Application.persistentDataPath + "/ThePlayerInfo.gd";
 		FileStream file = File.Create(path);
-		formatter.Serialize(file, saved);//converts player data to binary file
+        PlayerData data = new PlayerData
+        {
+            experience = Game.current.thePlayer.experience,
+            level = Game.current.thePlayer.level,
+            bodyIndex = Game.current.thePlayer.bodyIndex,
+            hairIndex = Game.current.thePlayer.hairIndex,
+            kitIndex = Game.current.thePlayer.kitIndex,
+            faceIndex = Game.current.thePlayer.faceIndex,
+            currentMenu = Game.current.thePlayer.currentMenu
+        };
+        formatter.Serialize(file, data);//converts player data to binary file
 		file.Close();
-	}
+
+    }
+         
+             
 	public static void LoadPlayer()
 	{
-		string path = Application.persistentDataPath + "/playerInfo.gd";
+		string path = Application.persistentDataPath + "/ThePlayerInfo.gd";
 		if (File.Exists(path))
 		{
 
 			BinaryFormatter formatter = new BinaryFormatter();
-			FileStream stream = new FileStream(path, FileMode.Open);
-
-			saved = (List<Game>)formatter.Deserialize(stream);
+			FileStream stream = File.Open(path, FileMode.Open);
+            PlayerData data = (PlayerData)formatter.Deserialize(stream);
 			stream.Close();
-
+            if(PlayerPrefs.HasKey("remember"))
+            {
+                Debug.Log("OK");
+                menu = 1;
+            }
+            else
+            {
+                menu = 0;
+            }
+            experience = data.experience;
+            level = data.level;
+            body = data.bodyIndex;
+            hair = data.hairIndex;
+            kit = data.kitIndex;
+            face = data.faceIndex;
+            mainMenu = data.currentMenu;
+            GameManager.theMenu = mainMenu;
 		}
 		else
 		{

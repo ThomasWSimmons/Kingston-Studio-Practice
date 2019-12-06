@@ -6,13 +6,13 @@ public class menuManager : MonoBehaviour
 {
 
     public GameObject firstLoadPanel,panelNormal,quitPanel;
-    
+   
     private int choice;
   
-    void Awake()
+    void Start()
     {
         choice = GameManager.theMenu;
-       
+        Debug.Log("THE MENU IN MANAGER" + choice);
 
         switch (choice)
         {

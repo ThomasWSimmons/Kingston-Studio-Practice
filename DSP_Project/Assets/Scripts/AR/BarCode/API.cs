@@ -26,9 +26,9 @@ public class API : MonoBehaviour
     public TextMeshProUGUI theProductName, serving, calories, carbs, sugars, unitRatio,carbcalculation,unroundedunit;
     public TextMeshProUGUI[] injections;
     private string NutriScore;
-    public RawImage theImage;
-    public RawImage whichNutriscoreIMG;
+    public RawImage theImage,whichNutriscoreIMG;
     public Texture[] allNutriscore;
+
 
     void OnEnable()
     {
@@ -104,7 +104,7 @@ public class API : MonoBehaviour
                      totalCarbs = (int)Math.Round(tempo);
                     
 
-
+                     
                 }
                 else
                 {
@@ -276,21 +276,26 @@ public class API : MonoBehaviour
         switch(nutriscore)
         {
             case "a":
+                
                 whichNutriscoreIMG.texture = allNutriscore[0];
                 break;
             case "b":
+              
                 whichNutriscoreIMG.texture = allNutriscore[1];
 
                 break;
             case "c":
+                
                 whichNutriscoreIMG.texture = allNutriscore[2];
 
                 break;
             case "d":
+              
                 whichNutriscoreIMG.texture = allNutriscore[3];
 
                 break;
             case "e":
+             
                 whichNutriscoreIMG.texture = allNutriscore[4];
 
                 break;

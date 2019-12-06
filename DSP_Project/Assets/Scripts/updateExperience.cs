@@ -9,7 +9,7 @@ public class updateExperience : MonoBehaviour
 {
     public Sprite[] whichNutriscore;
     public TMP_Text expTotal, Level, ExpMissing, NextLevel, expNutrigrade,youAreNow;
-    public GameObject highlightNutri, highlightScan,plusOne,plusLevel,exit;
+    public GameObject highlightNutri, highlightScan,plusOne,plusLevel,levelUp,exit;
     public Slider theSlider;
     public Image nutrigrade;
     private const int totalExperience = 100;
@@ -114,6 +114,7 @@ public class updateExperience : MonoBehaviour
         int theExpAfterScan = theExpAfterNutri + scanExp;
         currentMissingExp = totalExperience - theExpAfterScan;
         Game.current.thePlayer.experience = theExpAfterScan;
+        PlayerPrefs.SetInt("experience", theExpAfterScan);//used to save correctly
         toIncrease = theExpAfterScan-current;
         if(theExpAfterNutri>totalExperience)
         {
@@ -136,11 +137,16 @@ public class updateExperience : MonoBehaviour
         current += 1;
         plusLevel.SetActive(true);
         Game.current.thePlayer.level = current;//update Game info
+        PlayerPrefs.SetInt("Level", current);//used to save correctly
         theSlider.value = 0;
         Game.current.thePlayer.experience = 0;
+        PlayerPrefs.SetInt("experience", 0);//used to save correctly
         Level.text = "Level " + current.ToString();
         NextLevel.text = "Level "+(current + 1);
         youAreNow.text = "You are now Level" + current.ToString();
+        levelUp.SetActive(true);
+        mainMenuExperience.active = true;//display notif on main menu page
+        
     }
     void displayLevel()
     {

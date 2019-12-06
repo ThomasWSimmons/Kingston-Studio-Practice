@@ -38,6 +38,7 @@ public class TargetManager : MonoBehaviour
             DataSet dataSet = objectTracker.CreateDataSet();
             dataSet.Load(setName);
             objectTracker.ActivateDataSet(dataSet);
+            Debug.Log(setName);
         }
         objectTracker.Start();
 

@@ -10,7 +10,7 @@ public class MoveController : MonoBehaviour
     private Vector2 _touchOffset;
 
     private InstantTrackingController _controller;
-    public AudioSource myAudioSource;
+    public AudioSource[] myAudioSource;
     private void Start() {
         _controller = GetComponent<InstantTrackingController>();
     }
@@ -44,7 +44,40 @@ public class MoveController : MonoBehaviour
                     switch (hit.transform.name)
                     {
                         case "Sphere":
-                            myAudioSource.Play();
+                            Destroy(hit.transform.gameObject);
+                            myAudioSource[0].Play();
+                            break;
+                        case "leftBody":
+                            buttonManager.leftBody = true;
+                            myAudioSource[2].Play();
+                            break;
+                        case "rightBody":
+                            buttonManager.rightBody = true;
+                            myAudioSource[1].Play();
+                            break;
+                        case "leftHair":
+                            buttonManager.leftHair = true;
+                            myAudioSource[2].Play();
+                            break;
+                        case "rightHair":
+                            buttonManager.rightHair = true;
+                            myAudioSource[1].Play();
+                            break;
+                        case "leftKit":
+                            buttonManager.leftKit = true;
+                            myAudioSource[2].Play();
+                            break;
+                        case "rightKit":
+                            buttonManager.rightKit = true;
+                            myAudioSource[1].Play();
+                            break;
+                        case "revert":
+                            buttonManager.revert = true;
+                            myAudioSource[1].Play();
+                            break;
+                        case "toMenu":
+                            buttonManager.save = true;
+                            myAudioSource[1].Play();
                             break;
                         default:
                             break;
@@ -88,4 +121,5 @@ public class MoveController : MonoBehaviour
             _activeObject = null;
         }
     }
+
 }

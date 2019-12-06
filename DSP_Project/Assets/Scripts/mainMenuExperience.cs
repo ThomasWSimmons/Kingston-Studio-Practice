@@ -11,7 +11,8 @@ public class mainMenuExperience : MonoBehaviour
     public Slider theSlider;
     private const int totalExperience = 100;
     private int currentMissingExp, expNum, theLevel,theNext;
-
+    public static bool active;
+    public GameObject notif;
     // Start is called before the first frame update
     private void Start()
     {
@@ -22,7 +23,6 @@ public class mainMenuExperience : MonoBehaviour
         theLevel = Game.current.thePlayer.level;
         
         currentMissingExp = totalExperience-expNum;
-        Debug.Log(currentMissingExp + "MISSING");
         ExpMissing.text = currentMissingExp+ "exp to";
         theNext = theLevel + 1;
         NextLevel.text = "level "+theNext;
@@ -32,9 +32,13 @@ public class mainMenuExperience : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(active)
+        {
+            active = false;
+            notif.SetActive(true);
+        }
     }
-    public void UpdateTheLevel(int currentLevel)
+    /*public void UpdateTheLevel(int currentLevel)
     {
         
         Level.text = currentLevel.ToString();
@@ -48,5 +52,5 @@ public class mainMenuExperience : MonoBehaviour
         ExpMissing.text = currentMissingExp.ToString();
         theSlider.value = currentExperience;
 
-    }
+    }*/
 }

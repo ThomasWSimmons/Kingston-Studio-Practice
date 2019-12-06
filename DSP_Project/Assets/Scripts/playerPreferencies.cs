@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 public class playerPreferencies : MonoBehaviour
 {
-    public TextMeshProUGUI theUserName,theUserDiabeteType, theUserRatio,thePetName;
+    public TextMeshProUGUI theUserName;// theUserDiabeteType, theUserRatio;
     public TMP_InputField theNewUserName, theNewRatio;
    
     private string currentName;
@@ -14,10 +14,10 @@ public class playerPreferencies : MonoBehaviour
     {
         currentName= PlayerPrefs.GetString("username");
         currentRatio = PlayerPrefs.GetInt("ratio");
-        theUserRatio.text = currentRatio.ToString();
-        theUserDiabeteType.text = PlayerPrefs.GetString("diabeteType");
+        //theUserRatio.text = currentRatio.ToString();
+       // theUserDiabeteType.text = PlayerPrefs.GetString("diabeteType");
         theUserName.text = PlayerPrefs.GetString("username");
-        thePetName.text = PlayerPrefs.GetString("petName");
+        
 
     }
     public void changeUserName()
