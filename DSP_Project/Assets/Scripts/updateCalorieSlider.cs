@@ -26,7 +26,7 @@ public class updateCalorieSlider : MonoBehaviour
             Debug.Log("UPDD");
             caloriesTotal.text = Game.current.thePlayer.caloriesCurrent.ToString();
             current = Game.current.thePlayer.caloriesCurrent;
-            caloriesSlider.value = current / total;
+            caloriesSlider.value = (float)current / total;
             update = false;
         }
     }
