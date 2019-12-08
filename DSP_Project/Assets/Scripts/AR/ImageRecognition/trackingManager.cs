@@ -27,10 +27,10 @@ public class trackingManager : MonoBehaviour
                 {
                     Debug.Log("too long");
                     toActivate.SetActive(true);
-                    GameManager.instance.Pause();
                     toDeactivate.SetActive(false);
                     gameObject.SetActive(false);
-                }
+                    GameManager.instance.Pause();
+            }
                 else
                 {
                     timer += Time.deltaTime;

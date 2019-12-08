@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class EventManager : MonoBehaviour
 {
     public GameObject Results;
     public GameObject checkMark;
     private float timer;
-    public GameObject scanningPage;
+    public GameObject scanningPage,errorCalories;
     private static bool Active;
     private static string theName;
-
+    private int caloriesAmount, sugarsAmount;
     
     //result section
     public TMP_Text theProductName,serving,calories,carbs,sugars,injectionAmount1,injectionAmount2,unitRatio;
-    
+    public TMP_InputField servings;
     public RawImage theImage, theNutriscore;
     public Texture[] nutriscores,product;
     
@@ -89,6 +90,21 @@ public class EventManager : MonoBehaviour
         Active = false;
         theName = name;
     }*/ //tracking lost
+    public void updateCalories()
+    {
+        int theServing;
+        if(servings.text.Length>0)
+        {
+            theServing = Int32.Parse(servings.text);
+            Game.current.thePlayer.caloriesCurrent += (caloriesAmount * theServing);
+            Game.current.thePlayer.sugarCurrent += (sugarsAmount * theServing);
+            Debug.Log("serving =" + serving);
+        }
+        else
+        {
+            errorCalories.SetActive(true);
+        }
+    }
     public void whichResult(string name)
     {
         switch (name)
@@ -97,8 +113,10 @@ public class EventManager : MonoBehaviour
                 theProductName.text = "Grappes";
                 serving.text = "100g";
                 calories.text = "70 kCal";
+                caloriesAmount = 70;
                 carbs.text = "17g";
                 sugars.text = "16g";
+                sugarsAmount = 16;
                 injectionAmount1.text = injectionAmount2.text = "2";
                 theNutriscore.texture = nutriscores[0];
                 theImage.texture = product[2];
@@ -112,8 +130,10 @@ public class EventManager : MonoBehaviour
                 theProductName.text = "PopCorn";
                 serving.text = "30g";
                 calories.text = "142 kCal";
+                caloriesAmount = 142;
                 carbs.text = "19g";
                 sugars.text = "12g";
+                sugarsAmount = 12;
                 injectionAmount1.text = injectionAmount2.text = "2";
                 theNutriscore.texture = nutriscores[2];
                 theImage.texture = product[3];
@@ -124,8 +144,10 @@ public class EventManager : MonoBehaviour
                 theProductName.text = "sugar";
                 serving.text = "8g";
                 calories.text = "31 kCal";
+                caloriesAmount = 31;
                 carbs.text = "8g";
                 sugars.text = "8g";
+                sugarsAmount = 8;
                 injectionAmount1.text = injectionAmount2.text= "0";
                 theNutriscore.texture = nutriscores[1];
                 theImage.texture = product[1];
@@ -139,8 +161,10 @@ public class EventManager : MonoBehaviour
                 theProductName.text = "Coffee";
                 serving.text = "20g";
                 calories.text = "30 kCal";
+                caloriesAmount = 30;
                 carbs.text = "0g";
                 sugars.text = "0g";
+                sugarsAmount = 0;
                 injectionAmount1.text = injectionAmount2.text= "1";
                 theNutriscore.texture = nutriscores[0];
                 theImage.texture = product[0];

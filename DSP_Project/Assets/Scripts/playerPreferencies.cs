@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+
 public class playerPreferencies : MonoBehaviour
 {
-    public TextMeshProUGUI theUserName;// theUserDiabeteType, theUserRatio;
+    public TextMeshProUGUI theUserName,theCalsAmount,theCalsGoal,sugarAmount;// theUserDiabeteType, theUserRatio;
     public TMP_InputField theNewUserName, theNewRatio;
-   
+    public Slider currentCals, currentSugar;
     private string currentName;
     private int currentRatio;
     // Start is called before the first frame update
@@ -17,7 +19,9 @@ public class playerPreferencies : MonoBehaviour
         //theUserRatio.text = currentRatio.ToString();
        // theUserDiabeteType.text = PlayerPrefs.GetString("diabeteType");
         theUserName.text = PlayerPrefs.GetString("username");
-        
+        theCalsAmount.text = Game.current.thePlayer.caloriesCurrent.ToString();
+        theCalsGoal.text = PlayerPrefs.GetInt("calories").ToString();
+        currentCals.value = Game.current.thePlayer.caloriesCurrent / 100f;
 
     }
     public void changeUserName()

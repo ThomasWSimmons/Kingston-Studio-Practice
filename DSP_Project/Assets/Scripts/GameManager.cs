@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
 
     public static int indexB, indexH, indexK, indexF;
-    public int playerExperience, playerLevel;
+    public int playerExperience, playerLevel,playerCurrentCal,playerCurrentSug;
     public static int theMenu;
     //Awake is always called before any Start functions
     void Awake()
@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
             Game.current.thePlayer.faceIndex = indexF;
             playerExperience = Game.current.thePlayer.experience;
             playerLevel = Game.current.thePlayer.level;
+            playerCurrentCal = Game.current.thePlayer.caloriesCurrent;
+            playerCurrentSug = Game.current.thePlayer.sugarCurrent;
             Debug.Log(playerExperience + " " + playerLevel);
             containerGraph.valList = new List<int>(); 
 
@@ -50,7 +52,11 @@ public class GameManager : MonoBehaviour
             indexK = saveSystem.kit;
             indexF = saveSystem.face;
             theMenu = saveSystem.mainMenu;
+            playerCurrentSug = saveSystem.sugarCurrent;
+            playerCurrentCal = saveSystem.caloriesCurrent;
             Debug.Log(theMenu);
+            Game.current.thePlayer.sugarCurrent = playerCurrentSug;
+            Game.current.thePlayer.caloriesCurrent = playerCurrentCal;
             Game.current.thePlayer.experience = playerExperience;
             Game.current.thePlayer.level = playerLevel;
             Game.current.thePlayer.bodyIndex = indexB;

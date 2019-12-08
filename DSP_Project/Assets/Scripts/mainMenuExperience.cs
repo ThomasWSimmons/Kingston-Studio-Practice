@@ -7,26 +7,23 @@ using UnityEngine.UI;
 
 public class mainMenuExperience : MonoBehaviour
 {
-    public TMP_Text expTotal, Level, ExpMissing, NextLevel;
-    public Slider theSlider;
+    public TMP_Text expTotal, Level;
+    public Slider theSliderExp;
     private const int totalExperience = 100;
-    private int currentMissingExp, expNum, theLevel,theNext;
+    private int expNum, theLevel;
     public static bool active;
     public GameObject notif;
     // Start is called before the first frame update
     private void Start()
     {
         Debug.Log("EXPERIENCE" + Game.current.thePlayer.experience + " LEVEL" + Game.current.thePlayer.level);
+        //calsTotal = Game.current.thePlayer.totalCalories;
         expTotal.text = Game.current.thePlayer.experience+" exp total";
         Level.text = "Level "+Game.current.thePlayer.level;
         expNum = Game.current.thePlayer.experience;
-        theLevel = Game.current.thePlayer.level;
-        
-        currentMissingExp = totalExperience-expNum;
-        ExpMissing.text = currentMissingExp+ "exp to";
-        theNext = theLevel + 1;
-        NextLevel.text = "level "+theNext;
-        theSlider.value = expNum/100f;
+        //theLevel = Game.current.thePlayer.level;
+
+        theSliderExp.value = expNum/100f;
     }
 
     // Update is called once per frame

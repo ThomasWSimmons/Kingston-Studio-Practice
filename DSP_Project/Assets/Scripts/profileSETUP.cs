@@ -7,12 +7,12 @@ using TMPro;
 public class profileSETUP : MonoBehaviour
 {
 
-    public TMP_InputField theUserName, thePassword, theEmail, theAvatarName, loginName, loginPassword;
+    public TMP_InputField theUserName, thePassword, theEmail, theAvatarName,calories, loginName, loginPassword;
     public TMP_Text avatarName;
     public TMP_Dropdown theType, Ratio;
     private int theRatio, theDiabeticType, goodToGo;
     public GameObject errorname, errorAtio, errorPetName, errorPassword, errorEmail, errorType, errorLoginName, errorLoginPassword;
-    public GameObject profile, avatar;
+    public GameObject profile, avatar,ratio;
     public Toggle theCheck;
     private bool okPass, okUserName;
     // Start is called before the first frame update
@@ -118,11 +118,39 @@ public class profileSETUP : MonoBehaviour
 
 
     }
+    public void SetUpCalories()
+    {
+        int theAmount;
+        if (int.TryParse(calories.text, out theAmount))
+        {
+            theAmount = int.Parse(calories.text);
+            PlayerPrefs.SetInt("calories", theAmount);
+            Debug.Log(PlayerPrefs.GetInt("calories"));
+            goodToGo++;
+
+        }
+        else
+        {
+            if (goodToGo > 0)
+            {
+                goodToGo--;
+            }
+            errorEmail.SetActive(true);
+            Debug.Log("email error");
+        }
+
+
+
+    }
     public void SetUpType()
     {
         if (theType.value > 0)
         {
             theDiabeticType = theType.value;
+            if(theDiabeticType==1)
+            {
+                ratio.SetActive(true);
+            }
             Debug.Log("type:" + theDiabeticType);
             PlayerPrefs.SetInt("type", theDiabeticType);
             goodToGo++;
@@ -169,9 +197,11 @@ public class profileSETUP : MonoBehaviour
         {
             Debug.Log("pet name set up");
             goodToGo++;
-            PlayerPrefs.SetString("avatarName", theAvatarName.text);
-            avatarName.text = theAvatarName.text;
-
+            theAvatarName.text.Substring(0, 1).ToUpper();
+            string temp = theAvatarName.text.Substring(0, 1).ToUpper() + theAvatarName.text.Substring(1, theAvatarName.text.Length-1);
+            PlayerPrefs.SetString("avatarName", temp);
+            avatarName.text = temp;
+            Debug.Log(avatarName.text);
         }
         else
         {
@@ -189,7 +219,7 @@ public class profileSETUP : MonoBehaviour
     public void ToAvatar()
     {
 
-        if (goodToGo == 5)
+        if (goodToGo == 6)
         {
 
             if (PlayerPrefs.GetInt("type") == 1 && !PlayerPrefs.HasKey("ratio"))

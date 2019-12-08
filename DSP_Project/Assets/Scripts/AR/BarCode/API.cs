@@ -12,7 +12,7 @@ public class API : MonoBehaviour
 
     public GameObject check;
 
-    public GameObject errorNoMatch;
+    public GameObject errorNoMatch,errorservings;
     public GameObject errorScanning;
     private const string endpoint = "https://world.openfoodfacts.org/api/v0/product/";
     public static string barcode;
@@ -28,8 +28,8 @@ public class API : MonoBehaviour
     private string NutriScore;
     public RawImage theImage,whichNutriscoreIMG;
     public Texture[] allNutriscore;
-
-
+    public TMP_InputField servings;
+    private int cals,sugarsAmount;
     void OnEnable()
     {
         doneAPI = false;
@@ -241,7 +241,7 @@ public class API : MonoBehaviour
      
            
         joul = Int32.Parse(Kjoul);
-        int cals = (int)Math.Round(joul / 4.18f);
+        cals = (int)Math.Round(joul / 4.18f);
         calories.text = cals.ToString() + "kCal";
     }
     void getProdSugar(string[] theAnswer)
@@ -251,7 +251,12 @@ public class API : MonoBehaviour
             if (s.Contains("sugars_serving"))
             {
                 string[] temporary = s.Split(':');
+                string temp = (string)temporary.GetValue(1);
+               
                 sugars.text = (string)temporary.GetValue(1) + "g";
+                sugarsAmount = (int)float.Parse(temp);
+                Debug.Log("SUUG "+sugarsAmount);
+
             }
         }
     }
@@ -341,6 +346,23 @@ public class API : MonoBehaviour
                 string[] theName = temporary[1].Split('"');
                 NutriScore = theName[1];
             }
+        }
+    }
+
+    public void updateCalories()
+    {
+
+        int theServing;
+        if (servings.text.Length > 0)
+        {
+            theServing = Int32.Parse(servings.text);
+            Game.current.thePlayer.caloriesCurrent += (cals * theServing);
+            Game.current.thePlayer.sugarCurrent += (sugarsAmount * theServing);
+            Debug.Log("serving =" + serving);
+        }
+        else
+        {
+            errorservings.SetActive(true);
         }
     }
 }
