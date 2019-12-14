@@ -17,7 +17,7 @@ public class mainMenuExperience : MonoBehaviour
     private void Start()
     {
         Debug.Log("EXPERIENCE" + Game.current.thePlayer.experience + " LEVEL" + Game.current.thePlayer.level);
-        //calsTotal = Game.current.thePlayer.totalCalories;
+        
         expTotal.text = Game.current.thePlayer.experience+" exp total";
         Level.text = "Level "+Game.current.thePlayer.level;
         expNum = Game.current.thePlayer.experience;

@@ -21,10 +21,6 @@ public class containerGraph : MonoBehaviour
     public static void updateTheList(int amount)
     {
         valList.Add(amount);
-        for(int i=0;i<valList.Count;i++)
-        {
-            Debug.Log(valList[i]);
-        }
     }
     private void checkList()
     {

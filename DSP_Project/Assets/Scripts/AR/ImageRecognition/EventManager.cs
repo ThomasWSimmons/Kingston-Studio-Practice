@@ -99,6 +99,7 @@ public class EventManager : MonoBehaviour
             Game.current.thePlayer.caloriesCurrent += (caloriesAmount * theServing);
             Game.current.thePlayer.sugarCurrent += (sugarsAmount * theServing);
             Debug.Log("serving =" + serving);
+
         }
         else
         {

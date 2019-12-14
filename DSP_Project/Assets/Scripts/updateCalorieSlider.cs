@@ -17,7 +17,7 @@ public class updateCalorieSlider : MonoBehaviour
         caloriesGoal.text = PlayerPrefs.GetInt("calories").ToString();
         total = PlayerPrefs.GetInt("calories");
         caloriesSlider.value = (float)current / total;
-        Debug.Log("CURRR "+current / total);
+        Debug.Log("CURRR "+current+"/"+total+"= "+current / total);
     }
     private void Update()
     {

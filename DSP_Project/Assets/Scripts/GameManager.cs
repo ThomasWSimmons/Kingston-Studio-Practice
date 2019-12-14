@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
 
-       
-      if (!File.Exists(Application.persistentDataPath + "/ThePlayerInfo.gd"))
+
+        if (!File.Exists(Application.persistentDataPath + "/ThePlayerInfo.gd"))
         { 
                
             
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-           
+            Debug.Log("HERE");
             saveSystem.LoadPlayer();
             Game.current = new Game();
             playerExperience = saveSystem.experience;

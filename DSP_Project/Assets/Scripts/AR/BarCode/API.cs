@@ -64,7 +64,6 @@ public class API : MonoBehaviour
 
             if (webRequest.isNetworkError)
             {
-                Debug.Log(pages[page] + ": Error: " + webRequest.error);
                 errorNoMatchActive();
             }
             else
@@ -113,6 +112,7 @@ public class API : MonoBehaviour
                     {
                         errorActive();
                     }
+                    
                     totalCarbs = Int32.Parse(carbohydrates);
                     
                 }
@@ -198,12 +198,22 @@ public class API : MonoBehaviour
     {
         foreach (string s in theAnswer)
         {
-            if (s.Contains("serving_size"))
+            if (s.Contains("\"serving_size\""))
             {
-                // Debug.Log("serving: "+s);
                 string[] temporary = s.Split(':');
                 string[] theName = temporary[1].Split('"');
-                serving.text = (string)theName.GetValue(1);
+                if (theName.Length > 1)
+                {
+                    serving.text = (string)theName.GetValue(1);
+                }
+                else
+                {
+                    serving.text = "100g";
+                }
+            }
+            else
+            {
+                serving.text = "100g";
             }
         }
 
@@ -218,6 +228,11 @@ public class API : MonoBehaviour
                 string[] temporary = s.Split(':');
                 theResultCarbs = (string)temporary.GetValue(1);
             }
+            else if(s.Contains("carbohydrates_value"))
+            {
+                string[] temporary = s.Split(':');
+                theResultCarbs = (string)temporary.GetValue(1);
+            }
         }
         return theResultCarbs;
     }
@@ -226,7 +241,14 @@ public class API : MonoBehaviour
         string Kjoul = "";
         foreach (string s in theAnswer)
         {
-            if (s.Contains("energy-kcal_serving"))
+            if (s.Contains("\"energy-kcal_serving\""))
+            {
+
+                string[] temporary = s.Split(':');
+                Kjoul = (string)temporary.GetValue(1) ;
+                Debug.Log("Kjoul");
+            }
+            else if(s.Contains("energy_100g"))
             {
 
                 string[] temporary = s.Split(':');
@@ -248,15 +270,21 @@ public class API : MonoBehaviour
     {
         foreach (string s in theAnswer)
         {
-            if (s.Contains("sugars_serving"))
+            if (s.Contains("\"sugars_serving\""))
             {
                 string[] temporary = s.Split(':');
                 string temp = (string)temporary.GetValue(1);
                
                 sugars.text = (string)temporary.GetValue(1) + "g";
                 sugarsAmount = (int)float.Parse(temp);
-                Debug.Log("SUUG "+sugarsAmount);
 
+            }
+            else if(s.Contains("sugars_value"))
+            {
+                string[] temporary = s.Split(':');
+                string temp = (string)temporary.GetValue(1);
+                sugars.text = (string)temporary.GetValue(1) + "g";
+                sugarsAmount = (int)float.Parse(temp);
             }
         }
     }
@@ -330,7 +358,6 @@ public class API : MonoBehaviour
             unitRatio.text = "";
         }
         float unitAmount = (float)(carbsAmount / playerRatio);
-        Debug.Log(carbsAmount+"/"+playerRatio+"="+unitAmount);
         carbcalculation.text = carbsAmount.ToString();
         unroundedunit.text = unitAmount.ToString();
 
@@ -358,7 +385,6 @@ public class API : MonoBehaviour
             theServing = Int32.Parse(servings.text);
             Game.current.thePlayer.caloriesCurrent += (cals * theServing);
             Game.current.thePlayer.sugarCurrent += (sugarsAmount * theServing);
-            Debug.Log("serving =" + serving);
         }
         else
         {

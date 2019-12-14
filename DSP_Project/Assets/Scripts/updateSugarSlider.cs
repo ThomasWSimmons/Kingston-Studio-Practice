@@ -9,7 +9,7 @@ public class updateSugarSlider : MonoBehaviour
     public TMP_Text sugarCurr;
     public Slider sugarSlider;
     
-    private int current, total,sugarAmount;
+    private int sugarAmount;
     private void Start()
     {
         sugarCurr.text = Game.current.thePlayer.sugarCurrent.ToString()+"g of sugar";

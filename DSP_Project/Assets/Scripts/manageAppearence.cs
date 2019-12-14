@@ -249,6 +249,7 @@ public class manageAppearence : MonoBehaviour
         PlayerPrefs.SetInt("kitIndex", kitIndex);
         PlayerPrefs.SetInt("faceIndex", faceIndex);
         PlayerPrefs.SetString("saved", "true");
+        saveSystem.SavePlayer();
 
     }
     public void Revert()

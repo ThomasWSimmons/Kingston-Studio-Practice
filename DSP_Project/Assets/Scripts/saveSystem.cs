@@ -12,7 +12,6 @@ public static class saveSystem
 	public static void SavePlayer()
 	{
 		isSaving = 1;
-        Game.current.thePlayer.caloriesCurrent = PlayerPrefs.GetInt("caloriesCurrent");
         Game.current.thePlayer.currentMenu = GameManager.theMenu;
         Game.current.thePlayer.experience = PlayerPrefs.GetInt("experience");
         Game.current.thePlayer.level = PlayerPrefs.GetInt("level");

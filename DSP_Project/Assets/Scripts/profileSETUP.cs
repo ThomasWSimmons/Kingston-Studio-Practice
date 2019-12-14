@@ -7,19 +7,19 @@ using TMPro;
 public class profileSETUP : MonoBehaviour
 {
 
-    public TMP_InputField theUserName, thePassword, theEmail, theAvatarName,calories, loginName, loginPassword;
+    public TMP_InputField theUserName, thePassword, theEmail, theAvatarName, calories, loginName, loginPassword;
     public TMP_Text avatarName;
     public TMP_Dropdown theType, Ratio;
-    private int theRatio, theDiabeticType, goodToGo;
+    private int theRatio, theDiabeticType;
     public GameObject errorname, errorAtio, errorPetName, errorPassword, errorEmail, errorType, errorLoginName, errorLoginPassword;
-    public GameObject profile, avatar,ratio;
+    public GameObject profile, avatar, ratio;
     public Toggle theCheck;
-    private bool okPass, okUserName;
+    private bool okPass, okUserName, goodToGo, username, pass, mail, avat, cals, type;
     // Start is called before the first frame update
     void Start()
     {
         okPass = okUserName = false;
-        goodToGo = 0;
+        goodToGo = username = pass = mail = avat = cals = type = false;
         // PlayerPrefs.SetInt("firstLaunch", 1);
     }
 
@@ -30,6 +30,8 @@ public class profileSETUP : MonoBehaviour
     }
     public void compareUserName()
     {
+        Debug.Log(PlayerPrefs.GetString("username"));
+        Debug.Log(loginName.text);
         if (loginName.text.Equals(PlayerPrefs.GetString("username")))
         {
             okUserName = true;
@@ -54,21 +56,22 @@ public class profileSETUP : MonoBehaviour
     }
     public void SetUpName()
     {
-
+        username = false;
         if (theUserName.text.Length > 0)
         {
+            username = true;
+            Debug.Log("added " + theUserName.text) ;
+
             PlayerPrefs.SetString("username", theUserName.text);
-            Debug.Log(PlayerPrefs.GetString("username"));
-            goodToGo++;
+          
+
+
         }
         else
         {
-            if (goodToGo > 0)
-            {
-                goodToGo--;
-            }
+
             errorname.SetActive(true);
-            Debug.Log(" name error");
+
         }
 
 
@@ -76,20 +79,22 @@ public class profileSETUP : MonoBehaviour
     }
     public void SetUpPassword()
     {
-
+        pass = false;
+        Debug.Log(goodToGo);
         if (thePassword.text.Length > 0)
         {
+
+            pass = true;
+            Debug.Log("added");
+
+
             PlayerPrefs.SetString("password", thePassword.text);
-            Debug.Log(PlayerPrefs.GetString("password"));
-            goodToGo++;
+
+
+
         }
         else
         {
-            if (goodToGo > 0)
-            {
-                goodToGo--;
-            }
-            Debug.Log("password error");
             errorPassword.SetActive(true);
         }
 
@@ -98,21 +103,22 @@ public class profileSETUP : MonoBehaviour
     }
     public void SetUpEmail()
     {
+        mail = false;
+
         if (theEmail.text.Length > 0)
         {
+
+            mail = true;
+            Debug.Log("added");
+
             PlayerPrefs.SetString("email", theEmail.text);
-            Debug.Log(PlayerPrefs.GetString("email"));
-            goodToGo++;
+
 
         }
         else
         {
-            if (goodToGo > 0)
-            {
-                goodToGo--;
-            }
             errorEmail.SetActive(true);
-            Debug.Log("email error");
+
         }
 
 
@@ -120,23 +126,26 @@ public class profileSETUP : MonoBehaviour
     }
     public void SetUpCalories()
     {
-        int theAmount;
-        if (int.TryParse(calories.text, out theAmount))
+        cals = false;
+        Debug.Log(goodToGo);
+        if (int.TryParse(calories.text, out int theAmount))
         {
+
+            cals = true;
+            Debug.Log("added");
+
             theAmount = int.Parse(calories.text);
             PlayerPrefs.SetInt("calories", theAmount);
-            Debug.Log(PlayerPrefs.GetInt("calories"));
-            goodToGo++;
+
+
+
 
         }
         else
         {
-            if (goodToGo > 0)
-            {
-                goodToGo--;
-            }
+
             errorEmail.SetActive(true);
-            Debug.Log("email error");
+
         }
 
 
@@ -144,24 +153,27 @@ public class profileSETUP : MonoBehaviour
     }
     public void SetUpType()
     {
+        type = false;
+        Debug.Log(goodToGo);
         if (theType.value > 0)
         {
+
+            type = true;
+            Debug.Log("ADDED");
+
+
             theDiabeticType = theType.value;
-            if(theDiabeticType==1)
+            if (theDiabeticType == 1)
             {
                 ratio.SetActive(true);
             }
-            Debug.Log("type:" + theDiabeticType);
+
             PlayerPrefs.SetInt("type", theDiabeticType);
-            goodToGo++;
+
+
         }
         else
         {
-            if (goodToGo > 0)
-            {
-                goodToGo--;
-            }
-            Debug.Log("type error");
             errorType.SetActive(true);
         }
 
@@ -170,6 +182,7 @@ public class profileSETUP : MonoBehaviour
     }
     public void SetUpRatio()
     {
+
         if (Ratio.value > 0)
         {
 
@@ -187,39 +200,46 @@ public class profileSETUP : MonoBehaviour
 
             }
             PlayerPrefs.SetInt("ratio", theRatio);
-            Debug.Log("ratio =" + theRatio);
+
         }
 
     }
     public void SetUpAvatarName()
     {
+        avat = false;
+        Debug.Log(goodToGo);
         if (theAvatarName.text.Length > 0)
         {
-            Debug.Log("pet name set up");
-            goodToGo++;
+
+            avat = true;
+
             theAvatarName.text.Substring(0, 1).ToUpper();
-            string temp = theAvatarName.text.Substring(0, 1).ToUpper() + theAvatarName.text.Substring(1, theAvatarName.text.Length-1);
+            string temp = theAvatarName.text.Substring(0, 1).ToUpper() + theAvatarName.text.Substring(1, theAvatarName.text.Length - 1);
             PlayerPrefs.SetString("avatarName", temp);
             avatarName.text = temp;
-            Debug.Log(avatarName.text);
+
         }
         else
         {
-            if (goodToGo > 0)
-            {
-                goodToGo--;
-            }
-            Debug.Log("pet name error");
+
             errorPetName.SetActive(true);
         }
 
 
 
     }
+    public void checkGoodToGo()
+    {
+        if (username && mail && cals && pass && avat && type)
+        {
+            goodToGo = true;
+            ToAvatar();
+        }
+    }
     public void ToAvatar()
     {
 
-        if (goodToGo == 6)
+        if (goodToGo)
         {
 
             if (PlayerPrefs.GetInt("type") == 1 && !PlayerPrefs.HasKey("ratio"))

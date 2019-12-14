@@ -21,7 +21,6 @@ public class updateExperience : MonoBehaviour
     {
         expTotal.text = Game.current.thePlayer.experience +"exp total";
         Level.text = "Level "+Game.current.thePlayer.level.ToString();
-        Debug.Log("EXPERIENCE" + Game.current.thePlayer.experience + " LEVEL" + Game.current.thePlayer.level);
         expNum = Game.current.thePlayer.experience;
         theLevel = Game.current.thePlayer.level;
 
@@ -107,9 +106,7 @@ public class updateExperience : MonoBehaviour
     void checkLevelUp()
     {
         int current = Game.current.thePlayer.experience;
-        Debug.Log(current + "CURRENT");
         int nutriExp = PlayerPrefs.GetInt("nutriExp");
-        Debug.Log(nutriExp + "NUTRIEXP");
         int theExpAfterNutri = Game.current.thePlayer.experience + nutriExp;
         int theExpAfterScan = theExpAfterNutri + scanExp;
         currentMissingExp = totalExperience - theExpAfterScan;
