@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public static class saveSystem
 {
-    public static List<Game> saved = new List<Game>();
+   
     public static int experience, level,menu,body,hair,kit,face,mainMenu,caloriesCurrent,sugarCurrent;
 	public static int isSaving;
 	public static void SavePlayer()
@@ -20,7 +20,7 @@ public static class saveSystem
         Game.current.thePlayer.kitIndex= PlayerPrefs.GetInt("kitIndex");
         Game.current.thePlayer.faceIndex=PlayerPrefs.GetInt("faceIndex");
         BinaryFormatter formatter = new BinaryFormatter();
-		string path = Application.persistentDataPath + "/ThePlayerInfo.gd";
+		string path = Application.persistentDataPath + "/PlayerInfo.gd";
 		FileStream file = File.Create(path);
         PlayerData data = new PlayerData
         {
@@ -43,7 +43,7 @@ public static class saveSystem
              
 	public static void LoadPlayer()
 	{
-		string path = Application.persistentDataPath + "/ThePlayerInfo.gd";
+		string path = Application.persistentDataPath + "/PlayerInfo.gd";
 		if (File.Exists(path))
 		{
 

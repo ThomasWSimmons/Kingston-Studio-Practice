@@ -22,6 +22,10 @@ public class sceneSwitch : MonoBehaviour
     {
         GameManager.instance.BarCode();
     }
+    public void News()
+    {
+        GameManager.instance.News();
+    }
     public void experience()
     {
         if(containerGraph.scanned!=1)

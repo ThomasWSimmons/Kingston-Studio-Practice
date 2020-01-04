@@ -12,7 +12,7 @@ public class PlayerData // here we store informations of our player
     public PlayerData()
     {
         caloriesCurrent = sugarCurrent=0;
-        level = 0;
+        level = 1;//experience starts at level 1
         experience = 0;
         bodyIndex= hairIndex= kitIndex= faceIndex=currentMenu=0;
 }

@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/FirstLaunchDetect.unity
-    guid: bf3891549ca0f4e2796a70c8b82d0df7
   - enabled: 1
     path: Assets/Scenes/profileSetUp.unity
     guid: f7434c57fd1ac4b7dbb58ffea757b575
@@ -29,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Chart.unity
     guid: bef0894ddb6104a07847aed750fb5465
+  - enabled: 1
+    path: Assets/Scenes/News.unity
+    guid: 65463de3c0dec76429f9cc9ffa890adb
   m_configObjects: {}

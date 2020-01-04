@@ -20,9 +20,7 @@ public class GameManager : MonoBehaviour
 
 
         if (!File.Exists(Application.persistentDataPath + "/ThePlayerInfo.gd"))
-        { 
-               
-            
+        {  
             PlayerPrefs.DeleteAll();
             Debug.Log("new game");
             Game.current = new Game();
@@ -54,7 +52,7 @@ public class GameManager : MonoBehaviour
             theMenu = saveSystem.mainMenu;
             playerCurrentSug = saveSystem.sugarCurrent;
             playerCurrentCal = saveSystem.caloriesCurrent;
-            Debug.Log(theMenu);
+            //now re allocating to the current game data in order to have persistent data
             Game.current.thePlayer.sugarCurrent = playerCurrentSug;
             Game.current.thePlayer.caloriesCurrent = playerCurrentCal;
             Game.current.thePlayer.experience = playerExperience;
@@ -163,6 +161,10 @@ public class GameManager : MonoBehaviour
     public void customisation()
     {
         SceneManager.LoadScene("AvatarCustomisation");
+    }
+    public void News()
+    {
+        SceneManager.LoadScene("News");
     }
     public void trending()
     {
