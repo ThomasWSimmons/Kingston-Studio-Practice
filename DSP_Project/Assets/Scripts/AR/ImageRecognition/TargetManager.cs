@@ -49,8 +49,7 @@ public class TargetManager : MonoBehaviour
         List<TrackableBehaviour> allTrackable = new List<TrackableBehaviour>();
 
         allTrackable = TrackerManager.Instance.GetStateManager().GetTrackableBehaviours().ToList();
-
-
+        
         return allTrackable;
     }
 
