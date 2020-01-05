@@ -355,7 +355,7 @@ public class API : MonoBehaviour
         else
         {
             playerRatio = 10;
-            unitRatio.text = "";
+            unitRatio.text = "no ratio";
         }
         float unitAmount = (float)(carbsAmount / playerRatio);
         carbcalculation.text = carbsAmount.ToString();

@@ -122,7 +122,14 @@ public class EventManager : MonoBehaviour
                 theNutriscore.texture = nutriscores[0];
                 theImage.texture = product[2];
                 GameManager.instance.holdNutriscore("a");
-                unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+                if (PlayerPrefs.HasKey("ratio"))
+                {
+                    unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+                }
+                else
+                {
+                    unitRatio.text = "no ratio";
+                }
 
 
                 //assign nutriments values here
@@ -139,7 +146,14 @@ public class EventManager : MonoBehaviour
                 theNutriscore.texture = nutriscores[2];
                 theImage.texture = product[3];
                 GameManager.instance.holdNutriscore("d");
-                unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+                if (PlayerPrefs.HasKey("ratio"))
+                {
+                    unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+                }
+                else
+                {
+                    unitRatio.text = "no ratio";
+                }
                 break;
             case "sugar":
                 theProductName.text = "sugar";
@@ -153,9 +167,16 @@ public class EventManager : MonoBehaviour
                 theNutriscore.texture = nutriscores[1];
                 theImage.texture = product[1];
                 GameManager.instance.holdNutriscore("d");
-                unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
-                
-                
+                if (PlayerPrefs.HasKey("ratio"))
+                {
+                    unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+                }
+                else
+                {
+                    unitRatio.text = "no ratio";
+                }
+
+
                 //assign nutriments values here
                 break;
             case "coffee":
@@ -170,7 +191,14 @@ public class EventManager : MonoBehaviour
                 theNutriscore.texture = nutriscores[0];
                 theImage.texture = product[0];
                 GameManager.instance.holdNutriscore("b");
-                unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+                if (PlayerPrefs.HasKey("ratio"))
+                {
+                    unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
+                }
+                else
+                {
+                    unitRatio.text = "no ratio";
+                }
                 break;
         }
     }

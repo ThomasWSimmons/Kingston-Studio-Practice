@@ -12,7 +12,7 @@ public static class saveSystem
 	public static void SavePlayer()
 	{
 		isSaving = 1;
-        Game.current.thePlayer.currentMenu = GameManager.theMenu;
+        Game.current.thePlayer.currentMenu = GameManager.theMenu; 
         Game.current.thePlayer.experience = PlayerPrefs.GetInt("experience");
         Game.current.thePlayer.level = PlayerPrefs.GetInt("level");
         Game.current.thePlayer.bodyIndex=PlayerPrefs.GetInt("bodyIndex");
@@ -51,7 +51,7 @@ public static class saveSystem
 			FileStream stream = File.Open(path, FileMode.Open);
             PlayerData data = (PlayerData)formatter.Deserialize(stream);
 			stream.Close();
-            if(PlayerPrefs.HasKey("remember"))
+            if(PlayerPrefs.HasKey("remember"))// do we display sign in page or not
             {
                 Debug.Log("OK");
                 menu = 1;
@@ -68,8 +68,9 @@ public static class saveSystem
             kit = data.kitIndex;
             face = data.faceIndex;
             caloriesCurrent = data.caloriesCurrent;
-            mainMenu = data.currentMenu;
+            mainMenu = data.currentMenu;//does the user needs to log in  or sign up
             GameManager.theMenu = mainMenu;
+            Debug.Log("the menu is load" + GameManager.theMenu);
 		}
 		else
 		{

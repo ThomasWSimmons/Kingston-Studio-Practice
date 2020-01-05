@@ -7,11 +7,11 @@ using TMPro;
 public class profileSETUP : MonoBehaviour
 {
 
-    public TMP_InputField theUserName, thePassword, theEmail, theAvatarName, calories, loginName, loginPassword;
+    public TMP_InputField theUserName, thePassword, theEmail, theAvatarName, calories, loginName, loginPassword,confirmPasswordText;
     public TMP_Text avatarName;
     public TMP_Dropdown theType, Ratio;
     private int theRatio, theDiabeticType;
-    public GameObject errorname, errorAtio, errorPetName, errorPassword, errorEmail, errorType, errorLoginName, errorLoginPassword;
+    public GameObject errorname, errorAtio, errorPetName, errorPassword, errorEmail, errorType, errorLoginName, errorLoginPassword,errorCalories, errorPasswordConfirmed;
     public GameObject profile, avatar, ratio;
     public Toggle theCheck;
     private bool okPass, okUserName, goodToGo, username, pass, mail, avat, cals, type;
@@ -20,13 +20,7 @@ public class profileSETUP : MonoBehaviour
     {
         okPass = okUserName = false;
         goodToGo = username = pass = mail = avat = cals = type = false;
-        // PlayerPrefs.SetInt("firstLaunch", 1);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        
     }
     public void compareUserName()
     {
@@ -63,43 +57,54 @@ public class profileSETUP : MonoBehaviour
             Debug.Log("added " + theUserName.text) ;
 
             PlayerPrefs.SetString("username", theUserName.text);
-          
-
-
         }
         else
         {
-
             errorname.SetActive(true);
-
         }
-
-
 
     }
     public void SetUpPassword()
     {
-        pass = false;
-        Debug.Log(goodToGo);
         if (thePassword.text.Length > 0)
         {
-
-            pass = true;
-            Debug.Log("added");
-
-
             PlayerPrefs.SetString("password", thePassword.text);
-
-
-
         }
         else
         {
             errorPassword.SetActive(true);
         }
+    }
+    public void checkPasswordEntered()
+    {
+        if (!PlayerPrefs.HasKey("password"))
+        {
+            confirmPasswordText.DeactivateInputField();
+            errorPassword.SetActive(true);
+        }
+    }
+    public void checkPassword()
+    {
+        pass = false;
+        Debug.Log(confirmPasswordText.text + " conf");
+            if (confirmPasswordText.text.Length > 0)
+            {
 
-
-
+            Debug.Log(confirmPasswordText.text + " vs " + PlayerPrefs.GetString("password"));
+            if (confirmPasswordText.text.Equals(PlayerPrefs.GetString("password")))
+            {
+                pass = true;
+            }
+            else
+            {
+                errorPasswordConfirmed.SetActive(true);
+                pass = false;
+            }
+            }
+            else
+            {
+                errorPasswordConfirmed.SetActive(true);
+            }  
     }
     public void SetUpEmail()
     {
@@ -132,24 +137,23 @@ public class profileSETUP : MonoBehaviour
         {
 
             cals = true;
-            Debug.Log("added");
-
             theAmount = int.Parse(calories.text);
-            PlayerPrefs.SetInt("calories", theAmount);
-
-
-
-
+            if (theAmount >= 1200 && theAmount<=4000)//leaving a big range for daily calories intake depending on the user profile
+            {
+                PlayerPrefs.SetInt("calories", theAmount);
+            }
+            else
+            {
+                cals = false;
+                errorCalories.SetActive(true);
+            }
         }
         else
         {
 
-            errorEmail.SetActive(true);
+            errorCalories.SetActive(true);
 
         }
-
-
-
     }
     public void SetUpType()
     {
@@ -233,6 +237,7 @@ public class profileSETUP : MonoBehaviour
         if (username && mail && cals && pass && avat && type)
         {
             goodToGo = true;
+            GameManager.theMenu = 1;
             ToAvatar();
         }
     }

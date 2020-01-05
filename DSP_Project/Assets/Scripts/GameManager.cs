@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
-using System.Collections.Generic;       //Allows us to use Lists. 
-using UnityEngine.UI;                   //Allows us to use UI.
+using System.Collections.Generic;       //Allows us to use Lists.                 
 using System.IO;
 
 public class GameManager : MonoBehaviour
@@ -19,21 +17,26 @@ public class GameManager : MonoBehaviour
     {
 
 
-        if (!File.Exists(Application.persistentDataPath + "/ThePlayerInfo.gd"))
+        if (!File.Exists(Application.persistentDataPath + "/PlayerInfo.gd"))
         {  
             PlayerPrefs.DeleteAll();
             Debug.Log("new game");
             Game.current = new Game();
-            Game.current.thePlayer.experience = playerExperience;
-            Game.current.thePlayer.level = playerLevel;
-            Game.current.thePlayer.bodyIndex = indexB;
-            Game.current.thePlayer.hairIndex = indexH;
-            Game.current.thePlayer.kitIndex = indexK;
-            Game.current.thePlayer.faceIndex = indexF;
+            indexB=Game.current.thePlayer.bodyIndex;
+            indexH=Game.current.thePlayer.hairIndex;
+            indexK=Game.current.thePlayer.kitIndex;
+            indexF= Game.current.thePlayer.faceIndex;
             playerExperience = Game.current.thePlayer.experience;
             playerLevel = Game.current.thePlayer.level;
             playerCurrentCal = Game.current.thePlayer.caloriesCurrent;
             playerCurrentSug = Game.current.thePlayer.sugarCurrent;
+
+            PlayerPrefs.SetInt("experience",playerExperience);
+            PlayerPrefs.SetInt("level",playerLevel);
+            PlayerPrefs.SetInt("bodyIndex",indexB);
+            PlayerPrefs.SetInt("hairIndex",indexH);
+            PlayerPrefs.SetInt("kitIndex",indexK);
+            PlayerPrefs.SetInt("faceIndex",indexF);
             Debug.Log(playerExperience + " " + playerLevel);
             containerGraph.valList = new List<int>(); 
 
@@ -52,6 +55,7 @@ public class GameManager : MonoBehaviour
             theMenu = saveSystem.mainMenu;
             playerCurrentSug = saveSystem.sugarCurrent;
             playerCurrentCal = saveSystem.caloriesCurrent;
+            Debug.Log("THE MENU AFTER LOAD"+theMenu);
             //now re allocating to the current game data in order to have persistent data
             Game.current.thePlayer.sugarCurrent = playerCurrentSug;
             Game.current.thePlayer.caloriesCurrent = playerCurrentCal;
@@ -66,6 +70,7 @@ public class GameManager : MonoBehaviour
             {
                 MainMenu();
             }
+
         }
 
         //Check if instance already exists
@@ -90,7 +95,6 @@ public class GameManager : MonoBehaviour
     void OnApplicationQuit()
     {
         saveSystem.SavePlayer();
-
         Debug.Log("Application ending after " + Time.time + " seconds");
     }
 
