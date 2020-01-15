@@ -200,27 +200,7 @@ public class EventManager : MonoBehaviour
                     unitRatio.text = "no ratio";
                 }
                 break;
-            case "target":
-                theProductName.text = "test";
-                serving.text = "20g";
-                calories.text = "30 kCal";
-                caloriesAmount = 30;
-                carbs.text = "0g";
-                sugars.text = "0g";
-                sugarsAmount = 0;
-                injectionAmount1.text = injectionAmount2.text = "1";
-                theNutriscore.texture = nutriscores[0];
-                theImage.texture = product[0];
-                GameManager.instance.holdNutriscore("a");
-                if (PlayerPrefs.HasKey("ratio"))
-                {
-                    unitRatio.text = PlayerPrefs.GetInt("ratio").ToString();
-                }
-                else
-                {
-                    unitRatio.text = "no ratio";
-                }
-                break;
+           
         }
     }
 }
